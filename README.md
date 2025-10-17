@@ -61,4 +61,4 @@ After a series of tries and errors in order to find the secret UART channel, we 
 <br/>
 Here is the message that shows up when connected to the Serial Monitor.
 <br/>
-![Password_Request](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/Enter_Password_Request.png)
+![Password_Request](Attack_Identification/Enter_Password_Request.png)
