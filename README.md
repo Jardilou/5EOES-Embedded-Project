@@ -1,5 +1,5 @@
 # 5EOES-Embedded-Project
-A project to assess the course of embedded security describing how to operate attacks to crack a password on an embedded target using a chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware.
+The goal of this project is to assess the course of Embedded Security describing how to operate attacks to crack a password on an embedded target using a chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware.
 
 ## 0. Preliminary Work
 The very first step is to flash the unidentified firmware (see Preliminary_Work/secure_sketch_v20251015.1.elf) on the arduino uno. 
@@ -45,13 +45,16 @@ When connecting the Arduino Uno in a classic setup, the following message would 
 ![Serial Monitor](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/welcome_to_the_vault.png)
 <br/>
 This means there is a hidden channel to try our password.
+
 <br/>
 To detect a hidden channel, we connect a USB to TTL UART Uploader Module CH340G HW-193.
 <br/>
 ![CH340G HW-193](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/CH340G_HW-193.jpg)
 <br/>
+
 The next step for us is to remove the atmega328p microcontroller and to cable it like on the following schematic. The values of the resistors is 100 Ohms and the values of the capacitances need to be between 100 and 300 µF.
 <br/>
+
 The schematic will be detailed in the Power Analysis section.
 <br/>
 ![ATMEGA_Breadboard](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Breadboard_Circuit.png)
@@ -62,9 +65,11 @@ After a series of tries and errors in order to find the secret UART channel, we 
 - HW-193 GND to GND Rail
 - HW-193 RV to ATMEGA pin 16 (see the Attack_Identification/ATMEGA_Pinout.png file)
 - HW-193 5V to ATMEGA pin 17
-<br/> 
+<br/>
+
 The Arduino Uno board should be disconnected in this configuration since the input voltage will come from the HW-193 module.
 <br/>
+
 Here is the message that shows up when connected to the Serial Monitor and the message received when typing a wrong password.  
 
 ![Password_Request](https://raw.githubusercontent.com/Jardilou/5EOES-Embedded-Project/main/Attack_Identification/Enter_Password_Request.png)
@@ -74,6 +79,7 @@ We have thus found the main entry point !
 ## 2. Power Analysis
 2.1 Description
 <br/>
+
 A power analysis attack on an embedded platform measures tiny variations of power consumption during operations to extract secret data like a password in our case. It exploits physical leakage which will be measured by our chipwhisperer nano in order to analyse the traces.
 <br/>
 
