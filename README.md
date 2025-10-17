@@ -48,7 +48,7 @@ This means there is a hidden channel to try our password.
 
 <br/>
 To detect a hidden channel, we connect a USB to TTL UART Uploader Module CH340G HW-193.
-<br/>
+
 ![CH340G HW-193](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/CH340G_HW-193.jpg)
 <br/>
 
