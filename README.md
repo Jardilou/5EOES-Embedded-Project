@@ -3,7 +3,10 @@ A project to assess the course of embedded security describing how to operate at
 
 # 0.Preliminary Work
 The very first step is to flash the unidentified firmware (see Preliminary_Work/secure_sketch_v20251015.1.elf) on the arduino uno. 
-This is done using the command :
-<pre> '''
+This is done using the following command :
+<pre>
 .\avrdude.exe -v -patmega328p -carduino -P COMXX -b115200 -Uflash:w:secure_sketch_v20251015.1.elf 
-''' </pre>
+</pre>
+using the right COM port as COMXX.
+
+The next step is to remove the atmega328p microcontroller and to cable it like on the following schematic.
