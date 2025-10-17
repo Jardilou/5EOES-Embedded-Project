@@ -79,12 +79,13 @@ A power analysis attack on an embedded platform measures tiny variations of powe
 
 2.2 Setup of the chipwhisperer : 
 <br/>
+
 1. Remove the USB-UART connection cable
 2. Since the Chipwhisperer Nano is powered in 3.3V and the Arduino Uno is powered in 5V, both will need to be connected to the computer
 3. In order to connect the pins of the chipwhisperer to the breadboard, 20-pins headers need to be soldered on the board as well as 3-pins headers on the measure ports. 
 ![CWNano_up_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Up_Close.png)
 <br/>
-5. The pins of the chipwhisperer need to be connected as such :
+4. The pins of the chipwhisperer need to be connected as such :
 <br/>
 (Make sure to verify the pins of the chipwhisperer on the back of the board; the pin 2, 4, 6 etc are the closest to the edge)
 
@@ -104,17 +105,28 @@ Here is the ATMEGA pinout in case you need help.
 <br/>
 ![ATMEGA_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/main/Attack_Identification/ATMEGA_Pinout.jpg)
 <br/>
+
 2.3 Power Traces Analysis
 <br/>
+
 2.4 Results of the attack
 <br/>
+
 2.5 Discussion of countermeasures
 <br/>
+
 ## 3. Firmware Analysis
 3.1 Retrieval of the strings present in the firmware
+<br/>
+
 3.2 Analysis of the file extracted_strings.txt
+<br/>
+
 3.3 Password discovery, salt and hash presentation
+<br/>
+
 3.4 Countermeasures to implement
+<br/>
 
 ## 4. Final Attack Tree
 Justification of the attacks regarding the vulnerabilities
