@@ -83,6 +83,12 @@ Setup of the chipwhisperer :
 
 
 5. The pins of the chipwhisperer need to be connected as such (Make sure to verify the pins of the chipwhisperer on the back of the board; the pin 2, 4, 6 etc are the closest to the edge):
+| Colonne 1      | Colonne 2      | Colonne 3      |
+|----------------|----------------|----------------|
+| Valeur 1       | Valeur 2       | Valeur 3       |
+| Valeur 4       | Valeur 5       | Valeur 6       |
+ibziebfodncoaencpsq
+<br/>
 | CWNano     | ATMEGA/Breadboard     | Arduino Uno      |
 |----------------|----------------|----------------|
 | Pin 2(GND)       | GND Rail       | GND Pin      |
