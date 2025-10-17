@@ -40,6 +40,7 @@ cw.program_target(scope, cw.programmers.STM32FProgrammer, "../../firmware/mcu/st
 Once this is done, let us inspect what shows up on the Serial Monitor.
 
 #1. Attack Identification
-
+When connecting the Arduino Uno in a classic setup, the following message would show up.
+![Serial Mpnitor ](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/welcome_to_the_vault.png)
 
 The next step is to remove the atmega328p microcontroller and to cable it like on the following schematic.
