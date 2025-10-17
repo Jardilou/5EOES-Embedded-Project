@@ -66,7 +66,7 @@ After a series of tries and errors in order to find the secret UART channel, we 
 The Arduino Uno board should be disconnected in this configuration since the input voltage will come from the HW-193 module.
 <br/>
 Here is the message that shows up when connected to the Serial Monitor and the message received when typing a wrong password.  
-<br/>
+
 ![Password_Request](https://raw.githubusercontent.com/Jardilou/5EOES-Embedded-Project/main/Attack_Identification/Enter_Password_Request.png)
 
 We have thus found the main entry point !  
