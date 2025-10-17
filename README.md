@@ -37,5 +37,9 @@ except IOError:
 cw.program_target(scope, cw.programmers.STM32FProgrammer, "../../firmware/mcu/stm32-gpio-tristate/gpio-tristate-{}.hex".format(PLATFORM))
 </pre>
 
+Once this is done, let us inspect what shows up on the Serial Monitor.
+
+#1. Attack Identification
+
 
 The next step is to remove the atmega328p microcontroller and to cable it like on the following schematic.
