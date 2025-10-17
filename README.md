@@ -41,6 +41,7 @@ Once this is done, let us inspect what shows up on the Serial Monitor.
 
 ## 1. Attack Identification
 When connecting the Arduino Uno in a classic setup, the following message would show up.
+<br/>
 ![Serial Monitor](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/welcome_to_the_vault.png)
 <br/>
 This means there is a hidden channel to try our password.
@@ -53,12 +54,13 @@ The next step for us is to remove the atmega328p microcontroller and to cable it
 The schematic will be detailed in the Power Analysis section.
 <br/>
 ![ATMEGA_Breadboard](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Breadboard_Circuit.png)
+<br/>
 After a series of tries and errors in order to find the secret UART channel, we discovered that the USB-UART HW-193 module should be connected as such :
 - HW-193 5V to VCC Rail
 - HW-193 GND to GND Rail
 - HW-193 RV to ATMEGA pin 16 (see the Attack_Identification/ATMEGA_Pinout.png file)
 - HW-193 5V to ATMEGA pin 17
 <br/>
-Here is the message that shows up when connected to the Serial Monitor.
+Here is the message that shows up when connected to the Serial Monitor.  
 <br/>
 ![ATMEGA_Breadboard](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Breadboard_Circuit.png)
