@@ -90,6 +90,8 @@ Setup of the chipwhisperer :
 | Pin 10 (UART RX) | Pin 17 (UART TX) | /         |
 | Pin 12 (UART TX) | Pin 16 (UART RX) | /         |
 | Pin 16 (UART TX) | Pin 19 (UART RX) | Pin 13   |
+| Left Pin MEASURE | GND Rail         | /         |
+| Middle Pin MEASURE | Pin 7(ATMEGA VCC pin) | /         |
 
 
 Here is the ATMEGA pinout in case you need help.
