@@ -61,7 +61,8 @@ After a series of tries and errors in order to find the secret UART channel, we 
 - HW-193 5V to VCC Rail
 - HW-193 GND to GND Rail
 - HW-193 RV to ATMEGA pin 16 (see the Attack_Identification/ATMEGA_Pinout.png file)
-- HW-193 5V to ATMEGA pin 17  
+- HW-193 5V to ATMEGA pin 17
+<br/> 
 The Arduino Uno board should be disconnected in this configuration since the input voltage will come from the HW-193 module.
 <br/>
 Here is the message that shows up when connected to the Serial Monitor and the message received when typing a wrong password.  
@@ -76,4 +77,18 @@ A power analysis attack on an embedded platform measures tiny variations of powe
 Setup of the chipwhisperer : 
 1. Remove the USB-UART connection cable
 2. Since the Chipwhisperer Nano is powered in 3.3V and the Arduino Uno is powered in 5V, both will need to be connected to the computer
-3. 
+3. In order to connect the pins of the chipwhisperer to the breadboard, 20-pins headers need to be soldered on the board as well as 3-pins headers on the measure ports. 
+![CWNano_up_close](https://github.com/Jardilou/5EOES-Embedded-Project/main/Power_Analysis_Attack/Images/CWNano_Close_View.png)
+<br/>
+![ATMEGA_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/main/Attack_Identification/ATMEGA_Pinout.jpg)
+
+
+5. The pins of the chipwhisperer need to be connected as such (Make sure to verify the pins of the chipwhisperer on the back of the board; the pin 2, 4, 6 etc are the closest to the edge):
+| CWNano     | ATMEGA/Breadboard     | Arduino Uno      |
+|----------------|----------------|----------------|
+| Pin 2(GND)       | GND Rail       | GND Pin      |
+| Pin 5(Reset)       | Pin 1(Reset)       | Reset Pin       |
+| Pin 8(VRef)       | VCC Rail       | 5V Pin       |
+| Pin 10(UART RX)       | Pin 17(UART TX)       | /      |
+| Pin 12(UART TX)       | Pin 16(UART RX)       | /      |
+| Pin 16(UART TX)       | Pin 19(UART RX)       | Pin 13      |
