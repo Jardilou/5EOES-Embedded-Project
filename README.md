@@ -79,24 +79,18 @@ Setup of the chipwhisperer :
 2. Since the Chipwhisperer Nano is powered in 3.3V and the Arduino Uno is powered in 5V, both will need to be connected to the computer
 3. In order to connect the pins of the chipwhisperer to the breadboard, 20-pins headers need to be soldered on the board as well as 3-pins headers on the measure ports. 
 ![CWNano_up_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Close_View.png)
-
-
-
-5. The pins of the chipwhisperer need to be connected as such (Make sure to verify the pins of the chipwhisperer on the back of the board; the pin 2, 4, 6 etc are the closest to the edge):
-| Colonne 1      | Colonne 2      | Colonne 3      |
-|----------------|----------------|----------------|
-| Valeur 1       | Valeur 2       | Valeur 3       |
-| Valeur 4       | Valeur 5       | Valeur 6       |
-ibziebfodncoaencpsq
 <br/>
-| CWNano     | ATMEGA/Breadboard     | Arduino Uno      |
-|----------------|----------------|----------------|
-| Pin 2(GND)       | GND Rail       | GND Pin      |
-| Pin 5(Reset)       | Pin 1(Reset)       | Reset Pin       |
-| Pin 8(VRef)       | VCC Rail       | 5V Pin       |
-| Pin 10(UART RX)       | Pin 17(UART TX)       | /      |
-| Pin 12(UART TX)       | Pin 16(UART RX)       | /      |
-| Pin 16(UART TX)       | Pin 19(UART RX)       | Pin 13      |
+5. The pins of the chipwhisperer need to be connected as such (Make sure to verify the pins of the chipwhisperer on the back of the board; the pin 2, 4, 6 etc are the closest to the edge):
+<br/>
+| CWNano        | ATMEGA/Breadboard | Arduino Uno |
+|---------------|-----------------|-------------|
+| Pin 2 (GND)   | GND Rail         | GND Pin     |
+| Pin 5 (Reset) | Pin 1 (Reset)    | Reset Pin   |
+| Pin 8 (VRef)  | VCC Rail         | 5V Pin      |
+| Pin 10 (UART RX) | Pin 17 (UART TX) | /         |
+| Pin 12 (UART TX) | Pin 16 (UART RX) | /         |
+| Pin 16 (UART TX) | Pin 19 (UART RX) | Pin 13   |
+
 <br/>
 Here is the ATMEGA pinout in case you need help.
 <br/>
