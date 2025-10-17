@@ -1,5 +1,5 @@
 # 5EOES-Embedded-Project
-A project to assess the course of embedded security describing how to operate attacks to crack a password on an embedded target. The target in our case is an arduino uno platform flashed with an unidentified firmware.
+A project to assess the course of embedded security describing how to operate attacks to crack a password on an embedded target using a chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware.
 
 ## 0.Preliminary Work
 The very first step is to flash the unidentified firmware (see Preliminary_Work/secure_sketch_v20251015.1.elf) on the arduino uno. 
@@ -63,6 +63,12 @@ After a series of tries and errors in order to find the secret UART channel, we 
 - HW-193 RV to ATMEGA pin 16 (see the Attack_Identification/ATMEGA_Pinout.png file)
 - HW-193 5V to ATMEGA pin 17
 <br/>
-Here is the message that shows up when connected to the Serial Monitor.  
+Here is the message that shows up when connected to the Serial Monitor and the message received when typing a wrong password.  
 <br/>
 ![Password_Request](https://raw.githubusercontent.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/Enter_Password_Request.png)
+
+We have thus found the main entry point !  
+
+## 2 Power Analysis
+A power analysis attack on an embedded platform measures tiny variations of power consumption during operations to extract secret data like a password in our case. It exploits physical leakage which will be measured by our chipwhisperer nano in order to analyse the traces.
+###Setup
