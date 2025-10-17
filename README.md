@@ -65,4 +65,4 @@ After a series of tries and errors in order to find the secret UART channel, we 
 <br/>
 Here is the message that shows up when connected to the Serial Monitor.  
 <br/>
-![ATMEGA_Breadboard2](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Breadboard_Circuit.png)
+![ATMEGA_Breadboard2](https://raw.githubusercontent.com/Jardilou/5EOES-Embedded-Project/main/Attack_Identification/ATMEGA_Breadboard_Circuit.png)
