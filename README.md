@@ -7,6 +7,35 @@ This is done using the following command :
 <pre>
 .\avrdude.exe -v -patmega328p -carduino -P COMXX -b115200 -Uflash:w:secure_sketch_v20251015.1.elf 
 </pre>
-using the right COM port as COMXX.
+using the right COM port as COMXX and entering the command in the same folder as the firmware. You should see "Avrdude done. Thank you" once the flashing is finished.
+
+Before entering the attack identification phase, in order to avoid having the STM32F0 GPIOs driven by the CW-Nano when interacting with our external target, we should set them as high impedance. This is done by :
+1. Creating a new folder in our chipwhisperer path named firmware/mcu/stm32-gpio-tristate.
+2. Putting the gpio_tristate.c and Makefile.txt (see the Preliminary_Work folder) files in this new folder.
+3. Running the following code :
+   
+<pre>
+%%bash
+cd ../../firmware/mcu/stm32-gpio-tristate
+make PLATFORM='CWNANO' CRYPTO_TARGET=NONE -j
+</pre>
+
+<pre>
+import chipwhisperer as cw
+try:
+    if not scope.connectStatus:
+        scope.con()
+except NameError:
+    scope = cw.scope()
+try:
+    target = cw.target(scope)
+except IOError:
+    print("INFO: Caught exception on reconnecting to target - attempting to reconnect to scope first.")
+    print("INFO: This is a work-around when USB has died without Python knowing. Ignore errors above this line.")
+    scope = cw.scope()
+    target = cw.target(scope)
+cw.program_target(scope, cw.programmers.STM32FProgrammer, "../../firmware/mcu/stm32-gpio-tristate/gpio-tristate-{}.hex".format(PLATFORM))
+</pre>
+
 
 The next step is to remove the atmega328p microcontroller and to cable it like on the following schematic.
