@@ -1,7 +1,7 @@
 # 5EOES-Embedded-Project
 A project to assess the course of embedded security describing how to operate attacks to crack a password on an embedded target using a chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware.
 
-## 0.Preliminary Work
+## 0. Preliminary Work
 The very first step is to flash the unidentified firmware (see Preliminary_Work/secure_sketch_v20251015.1.elf) on the arduino uno. 
 This is done using the following command :
 <pre>
@@ -71,18 +71,22 @@ Here is the message that shows up when connected to the Serial Monitor and the m
 
 We have thus found the main entry point !  
 
-## 2 Power Analysis
+## 2. Power Analysis
+2.1 Description
+<br/>
 A power analysis attack on an embedded platform measures tiny variations of power consumption during operations to extract secret data like a password in our case. It exploits physical leakage which will be measured by our chipwhisperer nano in order to analyse the traces.
 <br/>
-Setup of the chipwhisperer : 
+
+2.2 Setup of the chipwhisperer : 
+<br/>
 1. Remove the USB-UART connection cable
 2. Since the Chipwhisperer Nano is powered in 3.3V and the Arduino Uno is powered in 5V, both will need to be connected to the computer
 3. In order to connect the pins of the chipwhisperer to the breadboard, 20-pins headers need to be soldered on the board as well as 3-pins headers on the measure ports. 
 ![CWNano_up_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Up_Close.png)
 <br/>
-5. The pins of the chipwhisperer need to be connected as such
+5. The pins of the chipwhisperer need to be connected as such :
 <br/>
-(Make sure to verify the pins of the chipwhisperer on the back of the board; the pin 2, 4, 6 etc are the closest to the edge):
+(Make sure to verify the pins of the chipwhisperer on the back of the board; the pin 2, 4, 6 etc are the closest to the edge)
 
 | CWNano        | ATMEGA/Breadboard | Arduino Uno |
 |---------------|-----------------|-------------|
@@ -99,3 +103,19 @@ Setup of the chipwhisperer :
 Here is the ATMEGA pinout in case you need help.
 <br/>
 ![ATMEGA_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/main/Attack_Identification/ATMEGA_Pinout.jpg)
+<br/>
+2.3 Power Traces Analysis
+<br/>
+2.4 Results of the attack
+<br/>
+2.5 Discussion of countermeasures
+<br/>
+## 3. Firmware Analysis
+3.1 Retrieval of the strings present in the firmware
+3.2 Analysis of the file extracted_strings.txt
+3.3 Password discovery, salt and hash presentation
+3.4 Countermeasures to implement
+
+## 4. Final Attack Tree
+Justification of the attacks regarding the vulnerabilities
+## 5. Vulnerability Assessment Score
