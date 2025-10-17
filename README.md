@@ -60,4 +60,5 @@ After a series of tries and errors in order to find the secret UART channel, we 
 - HW-193 5V to ATMEGA pin 17
 <br/>
 Here is the message that shows up when connected to the Serial Monitor.
-![Password_Request](../Attack_Identification/Enter_Password_Request.png)
+<br/>
+![ATMEGA_Breadboard](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Breadboard_Circuit.png)
