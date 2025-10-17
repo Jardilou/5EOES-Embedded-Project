@@ -81,7 +81,7 @@ Setup of the chipwhisperer :
 ![CWNano_up_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Close_View.png)
 <br/>
 5. The pins of the chipwhisperer need to be connected as such (Make sure to verify the pins of the chipwhisperer on the back of the board; the pin 2, 4, 6 etc are the closest to the edge):
-<br/>
+
 | CWNano        | ATMEGA/Breadboard | Arduino Uno |
 |---------------|-----------------|-------------|
 | Pin 2 (GND)   | GND Rail         | GND Pin     |
@@ -91,7 +91,7 @@ Setup of the chipwhisperer :
 | Pin 12 (UART TX) | Pin 16 (UART RX) | /         |
 | Pin 16 (UART TX) | Pin 19 (UART RX) | Pin 13   |
 
-<br/>
+
 Here is the ATMEGA pinout in case you need help.
 <br/>
 ![ATMEGA_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/main/Attack_Identification/ATMEGA_Pinout.jpg)
