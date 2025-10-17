@@ -1,4 +1,4 @@
-# 5EOES-Embedded-Project
+## 5EOES-Embedded-Project
 A project to assess the course of embedded security describing how to operate attacks to crack a password on an embedded target. The target in our case is an arduino uno platform flashed with an unidentified firmware.
 
 # 0.Preliminary Work
@@ -39,7 +39,7 @@ cw.program_target(scope, cw.programmers.STM32FProgrammer, "../../firmware/mcu/st
 
 Once this is done, let us inspect what shows up on the Serial Monitor.
 
-#1. Attack Identification
+# 1. Attack Identification
 When connecting the Arduino Uno in a classic setup, the following message would show up.
 ![Serial Mpnitor ](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/welcome_to_the_vault.png)
 
