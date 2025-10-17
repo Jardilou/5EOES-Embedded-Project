@@ -89,8 +89,6 @@ A power analysis attack on an embedded platform measures tiny variations of powe
 1. Remove the USB-UART connection cable
 2. Since the Chipwhisperer Nano is powered in 3.3V and the Arduino Uno is powered in 5V, both will need to be connected to the computer
 3. In order to connect the pins of the chipwhisperer to the breadboard, 20-pins headers need to be soldered on the board as well as 3-pins headers on the measure ports. 
-![CWNano_up_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Up_Close.png)
-<br/>
 4. The pins of the chipwhisperer need to be connected as such :
 <br/>
 (Make sure to verify the pins of the chipwhisperer on the back of the board; the pin 2, 4, 6 etc are the closest to the edge)
@@ -105,8 +103,11 @@ A power analysis attack on an embedded platform measures tiny variations of powe
 | Pin 16 (UART TX) | Pin 19 (UART RX) | Pin 13   |
 | Left Pin MEASURE | GND Rail         | /         |
 | Middle Pin MEASURE | Pin 7(ATMEGA VCC pin) | /         |
+<br/>
 
-
+Here is the CWNano up close.
+![CWNano_up_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Up_Close.png)
+<br/>
 Here is the ATMEGA pinout in case you need help.
 
 ![ATMEGA_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Pinout.jpg)
