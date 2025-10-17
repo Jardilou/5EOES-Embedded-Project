@@ -42,10 +42,12 @@ Once this is done, let us inspect what shows up on the Serial Monitor.
 ## 1. Attack Identification
 When connecting the Arduino Uno in a classic setup, the following message would show up.
 ![Serial Monitor](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/welcome_to_the_vault.png)
+<br/>
 This means there is a hidden channel to try our password.
-
+<br/>
 To detect a hidden channel, we connect a USB to TTL UART Uploader Module CH340G HW-193
 ![CH340G HW-193](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/CH340G_HW-193.jpg)
+<br/>
 The next step for us is to remove the atmega328p microcontroller and to cable it like on the following schematic. 
 
 
