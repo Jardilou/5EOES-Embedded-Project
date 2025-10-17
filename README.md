@@ -44,7 +44,7 @@ When connecting the Arduino Uno in a classic setup, the following message would 
 <br/>
 ![Serial Monitor](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/welcome_to_the_vault.png)
 <br/>
-This means there is a hidden channel to try our password.
+We conclude that there is a hidden channel, probably UART On the pins of the ATMEGA328p.
 
 <br/>
 To detect a hidden channel, we connect a USB to TTL UART Uploader Module CH340G HW-193.
@@ -52,7 +52,7 @@ To detect a hidden channel, we connect a USB to TTL UART Uploader Module CH340G 
 ![CH340G HW-193](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/CH340G_HW-193.jpg)
 <br/>
 
-The next step for us is to remove the atmega328p microcontroller and to cable it like on the following schematic. The values of the resistors is 100 Ohms and the values of the capacitances need to be between 100 and 300 µF.
+The next step for us is to remove the ATMEGA328p microcontroller and to cable it like on the following schematic. The values of the resistors is 100 Ohms and the values of the capacitances need to be between 100 and 300 µF.
 <br/>
 
 The schematic will be detailed in the Power Analysis section.
@@ -65,6 +65,8 @@ After a series of tries and errors in order to find the secret UART channel, we 
 - HW-193 GND to GND Rail
 - HW-193 RV to ATMEGA pin 16 (see the Attack_Identification/ATMEGA_Pinout.png file)
 - HW-193 5V to ATMEGA pin 17
+<br/>
+This discovery was made thanks to the proximity of the TX and RX pins. Should these pins be far away from each other, the time needed for the discovery would have been greater.
 <br/>
 
 The Arduino Uno board should be disconnected in this configuration since the input voltage will come from the HW-193 module.
