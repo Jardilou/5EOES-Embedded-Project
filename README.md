@@ -45,10 +45,21 @@ When connecting the Arduino Uno in a classic setup, the following message would 
 <br/>
 This means there is a hidden channel to try our password.
 <br/>
-To detect a hidden channel, we connect a USB to TTL UART Uploader Module CH340G HW-193
+To detect a hidden channel, we connect a USB to TTL UART Uploader Module CH340G HW-193.
 <br/>
 ![CH340G HW-193](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/CH340G_HW-193.jpg)
 <br/>
-The next step for us is to remove the atmega328p microcontroller and to cable it like on the following schematic. 
-
-
+The next step for us is to remove the atmega328p microcontroller and to cable it like on the following schematic. The values of the resistors is 100 Ohms and the values of the capacitances need to be between 100 and 300 µF.
+The schematic will be detailed in the Power Analysis section.
+<br/>
+https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Breadboard_Circuit.png
+![ATMEGA_Breadboard](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Breadboard_Circuit.png)
+After a series of tries and errors in order to find the secret UART channel, we discovered that the USB-UART HW-193 module should be connected as such :
+- HW-193 5V to VCC Rail
+- HW-193 GND to GND Rail
+- HW-193 RV to ATMEGA pin 16 (see the Attack_Identification/ATMEGA_Pinout.png file)
+- HW-193 5V to ATMEGA pin 17
+<br/>
+Here is the message that shows up when connected to the Serial Monitor.
+<br/>
+![Password_Request](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/Enter_Password_Request.png)
