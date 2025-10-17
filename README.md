@@ -102,8 +102,8 @@ A power analysis attack on an embedded platform measures tiny variations of powe
 
 
 Here is the ATMEGA pinout in case you need help.
-<br/>
-![ATMEGA_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/main/Attack_Identification/ATMEGA_Pinout.jpg)
+
+![ATMEGA_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Pinout.jpg)
 <br/>
 
 2.3 Power Traces Analysis
