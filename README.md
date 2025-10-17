@@ -61,14 +61,19 @@ After a series of tries and errors in order to find the secret UART channel, we 
 - HW-193 5V to VCC Rail
 - HW-193 GND to GND Rail
 - HW-193 RV to ATMEGA pin 16 (see the Attack_Identification/ATMEGA_Pinout.png file)
-- HW-193 5V to ATMEGA pin 17
+- HW-193 5V to ATMEGA pin 17  
+The Arduino Uno board should be disconnected in this configuration since the input voltage will come from the HW-193 module.
 <br/>
 Here is the message that shows up when connected to the Serial Monitor and the message received when typing a wrong password.  
 <br/>
-![Password_Request](https://raw.githubusercontent.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/Enter_Password_Request.png)
+![Password_Request](https://raw.githubusercontent.com/Jardilou/5EOES-Embedded-Project/main/Attack_Identification/Enter_Password_Request.png)
 
 We have thus found the main entry point !  
 
 ## 2 Power Analysis
 A power analysis attack on an embedded platform measures tiny variations of power consumption during operations to extract secret data like a password in our case. It exploits physical leakage which will be measured by our chipwhisperer nano in order to analyse the traces.
-###Setup
+<br/>
+Setup of the chipwhisperer : 
+1. Remove the USB-UART connection cable
+2. Since the Chipwhisperer Nano is powered in 3.3V and the Arduino Uno is powered in 5V, both will need to be connected to the computer
+3. 
