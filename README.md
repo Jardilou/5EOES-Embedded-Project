@@ -80,7 +80,9 @@ Setup of the chipwhisperer :
 3. In order to connect the pins of the chipwhisperer to the breadboard, 20-pins headers need to be soldered on the board as well as 3-pins headers on the measure ports. 
 ![CWNano_up_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Up_Close.png)
 <br/>
-5. The pins of the chipwhisperer need to be connected as such /(Make sure to verify the pins of the chipwhisperer on the back of the board; the pin 2, 4, 6 etc are the closest to the edge):
+5. The pins of the chipwhisperer need to be connected as such
+<br/>
+(Make sure to verify the pins of the chipwhisperer on the back of the board; the pin 2, 4, 6 etc are the closest to the edge):
 
 | CWNano        | ATMEGA/Breadboard | Arduino Uno |
 |---------------|-----------------|-------------|
