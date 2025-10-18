@@ -135,21 +135,23 @@ This extracted file contained 705 lines in which lied the password (see Firmware
 <pre>
 avr-objdump -s -j .data secure_sketch_v20251015.1.elf | less
 </pre>
-avr-objdump is a tool that lets you inspect the internal contents of an AVR firmware ELF file. The option -s tells it to dump the raw bytes (hex + ASCII).
+avr-objdump is a tool that lets you inspect the internal contents of an AVR firmware ELF file. The option -s tells it to dump the raw bytes.
 The option -j XXX restricts the dump to a specific memory section XXX. I tried the .rodata as well as the .text sections but unfortunately they yielded no results. The .data section contains global/static variables that have an initial value and will be copied into SRAM at runtime.
-It is a key elements of most embedded firmwares.
+It is a key element of most embedded firmwares.
 The | less at the end just allows scrolling conveniently through the output.
 So each command is inspecting a different memory region of the same firmware.
 <br/>
 Here is the output I got from this command.
 
 
-3.2 Analysis of the outputs
+3.2 Analysis of the output
 ![Im_in](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/.data_section_content.png)
 <br/>
 Among this file was a succession of random characters closely resembling to a password. Hmm, I wonder if this could be it. It certainly couldn't be that easy, after all the work I did trying to debug the power analysis...
+
 <br/>
 I reconnected my serial connection using the HW-193 and surprise surprise, a salt and hash appeared just before my eyes. 
+
 <br/>
 ![Im_in2](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/salt_and_hash.png)
 
