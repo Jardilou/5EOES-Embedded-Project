@@ -147,10 +147,10 @@ Here is the output I got from this command.
 3.2 Analysis of the output
 ![Im_in](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/.data_section_content.png)
 <br/>
-Among this file was a succession of random characters closely resembling to a password. Hmm, I wonder if this could be it. It certainly couldn't be that easy, after all the work I did trying to debug the power analysis...
+Among this file was a succession of random characters closely resembling to a password. Hmm, I wonder if this could be it. It certainly couldn't be that easy, after all the work I did trying to debug the power analysis... 
 
 <br/>
-I reconnected my serial connection using the HW-193 and surprise surprise, a salt and hash appeared just before my eyes. 
+I reconnected my serial connection using the HW-193 and surprise surprise, a salt and hash appeared just before my eyes. (I also tried the "Je suis une petite tortue" sentence, unsuccessfully)
 
 <br/>
 ![Im_in2](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/salt_and_hash.png)
