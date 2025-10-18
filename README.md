@@ -1,4 +1,4 @@
-# 5EOES-Embedded-Project
+<img width="895" height="790" alt="image" src="https://github.com/user-attachments/assets/259302fa-674a-4724-b427-515fa2aa55bb" /># 5EOES-Embedded-Project
 The goal of this project is to assess the course of Embedded Security describing how to operate attacks to crack a password on an embedded target using a chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware.
 
 ## 0. Preliminary Work
@@ -127,14 +127,30 @@ Here is the ATMEGA pinout in case you need help.
 ## 3. Firmware Analysis
 3.1 Retrieval of the strings present in the firmware
 <br/>
-
-3.2 Analysis of the file extracted_strings.txt
+At first, I tried to retrieve the passwords using the following command. It extracts the human-readable text from our binary file. "-n 4" means all strings with a length above 4 characters since I assumed the password wouldn't be this short.
+<pre>
+strings -n 4 secure_sketch_v20251015.1.elf > extracted_strings.txt
+</pre>
+This extracted file contained 705 lines in which lied the password (see Firmware_Attack/extracted_strings.txt). But before trying to test them all or write a script to brute-force the complete file, I tried this following command.
+<pre>
+avr-objdump -s -j .data secure_sketch_v20251015.1.elf | less
+</pre>
+avr-objdump is a tool that lets you inspect the internal contents of an AVR firmware ELF file. The option -s tells it to dump the raw bytes (hex + ASCII).
+The option -j <section> restricts the dump to a specific memory section. I tried the .rodata as well as the .text sections but unfortunately they yielded no results. The .data section contains global/static variables that have an initial value and will be copied into SRAM at runtime.
+It is a key elements of most embedded firmwares.
+The | less at the end just allows scrolling conveniently through the output.
+So each command is inspecting a different memory region of the same firmware.
 <br/>
+Here is the output I got from this command.
 
-3.3 Password discovery, salt and hash presentation
-<br/>
 
-3.4 Countermeasures to implement
+3.2 Analysis of the outputs
+![Im_in](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/.data_section_content.png)
+Among this file was a succession of random characters closely resembling to a password. Hmm, I wonder if this could be it. It certainly couldn't be that easy, after all the work I did trying to debug the power analysis...
+I reconnected my serial connection using the HW-193 and surprise surprise, a salt and hash appeared just before my eyes. 
+![Im_in2](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/salt_and_hash.png)
+
+3.3 Countermeasures to implement
 <br/>
 
 ## 4. Final Attack Tree
