@@ -127,7 +127,7 @@ Here is the ATMEGA pinout in case you need help.
 ## 3. Firmware Analysis
 3.1 Retrieval of the strings present in the firmware
 <br/>
-At first, I tried to retrieve the passwords using the following command. It extracts the human-readable text from our binary file. "-n 4" means all strings with a length above 4 characters since I assumed the password wouldn't be this short.
+At first, I tried to retrieve the passwords using the following command. It extracts the human-readable text from our binary file. "-n 4" means only strings with a length above 4 characters should be retrieved since I assumed the password wouldn't be this short.
 <pre>
 strings -n 4 secure_sketch_v20251015.1.elf > extracted_strings.txt
 </pre>
