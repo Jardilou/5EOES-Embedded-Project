@@ -125,21 +125,23 @@ Here is the ATMEGA pinout in case you need help.
 <br/>
 
 ## 3. Firmware Analysis
+
 3.1 Retrieval of the strings present in the firmware
 <br/>
+
 At first, I tried to retrieve the passwords using the following command. It extracts the human-readable text from our binary file. "-n 4" means only strings with a length above 4 characters should be retrieved since I assumed the password wouldn't be this short.
 <pre>
 strings -n 4 secure_sketch_v20251015.1.elf > extracted_strings.txt
 </pre>
+
 This extracted file contained 705 lines in which lied the password (see Firmware_Attack/extracted_strings.txt). But before trying to test them all or write a script to brute-force the complete file, I tried this following command.
 <pre>
 avr-objdump -s -j .data secure_sketch_v20251015.1.elf | less
 </pre>
+
 avr-objdump is a tool that lets you inspect the internal contents of an AVR firmware ELF file. The option -s tells it to dump the raw bytes.
-The option -j XXX restricts the dump to a specific memory section XXX. I tried the .rodata as well as the .text sections but unfortunately they yielded no results. The .data section contains global/static variables that have an initial value and will be copied into SRAM at runtime.
-It is a key element of most embedded firmwares.
+The option -j XXX restricts the dump to a specific memory section XXX. I tried the .rodata as well as the .text sections but unfortunately they yielded no results. The .data section contains global/static variables that have an initial value and will be copied into SRAM at runtime. It is a key element of most embedded firmwares.
 The | less at the end just allows scrolling conveniently through the output.
-So each command is inspecting a different memory region of the same firmware.
 <br/>
 Here is the output I got from this command.
 
@@ -152,7 +154,6 @@ Among this file was a succession of random characters closely resembling to a pa
 <br/>
 I reconnected my serial connection using the HW-193 and surprise surprise, a salt and hash appeared just before my eyes. (I also tried the "Je suis une petite tortue" sentence, unsuccessfully)
 
-<br/>
 ![Im_in2](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/salt_and_hash.png)
 
 3.3 Countermeasures to implement
