@@ -1,4 +1,4 @@
-<img width="895" height="790" alt="image" src="https://github.com/user-attachments/assets/259302fa-674a-4724-b427-515fa2aa55bb" /># 5EOES-Embedded-Project
+# 5EOES-Embedded-Project
 The goal of this project is to assess the course of Embedded Security describing how to operate attacks to crack a password on an embedded target using a chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware.
 
 ## 0. Preliminary Work
