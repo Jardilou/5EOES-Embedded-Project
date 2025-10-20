@@ -9,7 +9,9 @@ This is done using the following command :
 </pre>
 using the right COM port as COMXX and entering the command in the same folder as the firmware. You should see "Avrdude done. Thank you" once the flashing is finished.
 
-Before entering the attack identification phase, in order to avoid having the STM32F0 GPIOs driven by the CW-Nano when interacting with our external target, we should set them as high impedance. This is done by :
+The second step is to download the chipwhisperer toolchain following this guide : https://chipwhisperer.readthedocs.io/en/latest/
+
+Once the toolchain is setup, before entering the attack identification phase, in order to avoid having the STM32F0 GPIOs driven by the CW-Nano when interacting with our external target, we should set them as high impedance. This is done by :
 1. Creating a new folder in our chipwhisperer path named firmware/mcu/stm32-gpio-tristate.
 2. Putting the gpio_tristate.c and Makefile.txt (see the Preliminary_Work folder) files in this new folder.
 3. Running the following code :
