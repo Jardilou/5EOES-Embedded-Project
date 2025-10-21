@@ -127,17 +127,57 @@ Here is the ATMEGA pinout in case you need help.
 <br/>
 
 ## 3. Firmware Analysis
+<br/>
 
-3.1 Retrieval of the strings present in the firmware
+The first option in order to retrieve the cyphered text contained on the platform is typing the following command. It extracts the human-readable text from our binary file. "-n 4" means only strings with a length above 4 characters should be retrieved since I assumed the password wouldn't be this short.
+<pre>
+strings -n 4 secure_sketch_v20251015.1.elf > extracted_strings.txt
+</pre>
+
+This extracted file contained 705 lines in which lied the password (see Firmware_Attack/extracted_strings.txt). 
+
+Nevertheless, this next option yields more relevant results.
+<pre>
+avr-objdump -s -j .data secure_sketch_v20251015.1.elf | less
+</pre>
+
+avr-objdump is a tool that lets you inspect the internal contents of an AVR firmware ELF file. The option -s tells it to dump the raw bytes.
+The option -j XXX restricts the dump to a specific memory section XXX. I tried the .rodata as well as the .text sections but unfortunately they yielded no results. The .data section contains global or static variables that have an initial value and will be copied into volatile SRAM at runtime. It is a key element of most embedded firmwares.
+The | less at the end allows scrolling through the output.
+<br/>
+The output I got from this command is detailed here below.
 
 
 3.2 Analysis of the output
+![Im_in](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/.data_section_content.png)
+<br/>
+Among this file was a succession of random characters closely resembling to a password. Hmm, I wonder if this could be it...
+
+<br/>
+I reconnected my serial connection using the HW-193. What a surprise : a salt and hash appeared just before my eyes. Moreover, the previous image showing the content of the .data section exposed the very well kept secret "Je suis une petite tortue", confirming indeed that my professor is, in fact, a small turtle. 
+This attack is thus more damaging than the aforementioned Power Trace Analysis Attack since it exposed not only the password to the vault but the secrets as well.
+
+![Im_in2](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/salt_and_hash.png)
+<br/>
+
+3.3 Countermeasures to implement
+<br/>
 
 3.3 Countermeasures to implement
 <br/>
 
 ## 4. Final Attack Tree
-Justification of the attacks regarding the vulnerabilities
+Here are the vulnerabilities identified : 
+- Access to the .hex firmware flashed on the platform containing unencrypted data
+- Access to a hidden UART channel as well as a trigger set high during communication. This UART channel gave information when the wrong password is input.
+
+Exploits set up :
+- Firmware analysis
+- Side-channel power traces analysis
+
+  
+![Attack_tree](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Additional_Content/ES_Project_Attack_Tree.png)
+
 ## 5. Vulnerability Assessment Score
 
 ### 5.1 Power trace side-channel analysis
