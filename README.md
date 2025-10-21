@@ -67,7 +67,7 @@ Once this is finished, below is what should show up on the Serial Monitor.
 When connecting the Arduino Uno in a classic setup, the following message would show up. <br/>
 ![Serial Monitor](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/welcome_to_the_vault.png) <br/>
 
-We can therefore conclude the probable presence of a hidden channel, probably UART on the pins of the ATMEGA328p.
+We can therefore conclude the probable presence of a hidden channel, likely UART on the pins of the ATMEGA328p.
 
 To detect a hidden channel, a USB to TTL UART Uploader Module is needed. In this case the CH340G HW-193 was used.
 
@@ -124,9 +124,12 @@ A power analysis attack on an embedded platform measures tiny variations of powe
 | Middle Pin MEASURE | Pin 7 (ATMEGA VCC pin) | /           |
 
 Below is the CWNano up close.
-![CWNano\_up\_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Up_Close.png) <br/>
+![CWNano\_up\_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Up_Close.png) 
+<br/>
+
 Additionnally, below is the ATMEGA pinout.
-![ATMEGA\_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Pinout.jpg) <br/>
+![ATMEGA\_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Pinout.jpg) 
+<br/>
 
 ### 2.3 Power Traces Analysis
 
