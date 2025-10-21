@@ -27,6 +27,7 @@ This is done using the following command:
 `COMXX` must be replaced by the right COM port and the command must be executed in the same folder as the firmware. **"Avrdude done. Thank you"** should appear once the flashing is finished.
 
 The second step is to download the chipwhisperer toolchain following this guide:
+
 [https://chipwhisperer.readthedocs.io/en/latest/](https://chipwhisperer.readthedocs.io/en/latest/)
 
 Once the toolchain is setup, before entering the attack identification phase, in order to avoid having the STM32F0 GPIOs driven by the CW-Nano when interacting with our external target, we should set them as high impedance. This is done by:
@@ -65,6 +66,7 @@ Once this is finished, below is what should show up on the Serial Monitor.
 ## 1. Attack Identification
 
 When connecting the Arduino Uno in a classic setup, the following message would show up. <br/>
+
 ![Serial Monitor](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/welcome_to_the_vault.png) <br/>
 
 We can therefore conclude the probable presence of a hidden channel, likely UART on the pins of the ATMEGA328p.
@@ -89,7 +91,7 @@ This discovery was made thanks to the proximity of the TX and RX pins. Should th
 
 The Arduino Uno board should be disconnected in this configuration since the input voltage will come from the HW-193 module.
 
-Un next is the message appearing when serial connection is established as well as the message received when typing a wrong password.
+Up next is the message appearing when serial connection is established as well as the message received when typing a wrong password.
 
 ![Password\_Request](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/Enter_Password_Request.png)
 
