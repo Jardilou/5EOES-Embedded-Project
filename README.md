@@ -24,8 +24,7 @@ This is done using the following command:
 ```sh
 .\avrdude.exe -v -patmega328p -carduino -P COMXX -b115200 -Uflash:w:secure_sketch_v20251015.1.elf
 ```
-
-Use the right COM port as `COMXX` and enter the command in the same folder as the firmware. You should see **"Avrdude done. Thank you"** once the flashing is finished.
+`COMXX` must be replaced by the right COM port and the command must be executed in the same folder as the firmware. **"Avrdude done. Thank you"** should appear once the flashing is finished.
 
 The second step is to download the chipwhisperer toolchain following this guide:
 [https://chipwhisperer.readthedocs.io/en/latest/](https://chipwhisperer.readthedocs.io/en/latest/)
@@ -59,7 +58,7 @@ except IOError:
 cw.program_target(scope, cw.programmers.STM32FProgrammer, "../../firmware/mcu/stm32-gpio-tristate/gpio-tristate-{}.hex".format(PLATFORM))
 ```
 
-Once this is done, let us inspect what shows up on the Serial Monitor.
+Once this is finished, below is what should show up on the Serial Monitor.
 
 ---
 
@@ -68,29 +67,29 @@ Once this is done, let us inspect what shows up on the Serial Monitor.
 When connecting the Arduino Uno in a classic setup, the following message would show up. <br/>
 ![Serial Monitor](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/welcome_to_the_vault.png) <br/>
 
-We conclude that there is a hidden channel, probably UART on the pins of the ATMEGA328p.
+We can therefore conclude the probable presence of a hidden channel, probably UART on the pins of the ATMEGA328p.
 
-To detect a hidden channel, we connect a USB to TTL UART Uploader Module CH340G HW-193.
+To detect a hidden channel, a USB to TTL UART Uploader Module is needed. In this case the CH340G HW-193 was used.
 
 ![CH340G HW-193](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/CH340G_HW-193.jpg) <br/>
 
-The next step for us is to remove the ATMEGA328p microcontroller and to cable it like on the following schematic. The values of the resistors is 100 Ohms and the values of the capacitances need to be between 100 and 300 µF.
+The next step is to remove the ATMEGA328p microcontroller and cable it in the same way as the following schematic. The value of the resistors is 100 Ohms and the value of the capacitors must be between 100 and 300 µF.
 
 The schematic will be detailed in the Power Analysis section. <br/>
 ![ATMEGA\_Breadboard](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Breadboard_Circuit.png) <br/>
 
-After a series of tries and errors in order to find the secret UART channel, we discovered that the USB-UART HW-193 module should be connected as such:
+After a series of tries and errors in order to find the secret UART channel, the correct connection between the USB-UART HW-193 module and the ATMEGA on the breadboard was discovered :
 
 * HW-193 5V to VCC Rail
 * HW-193 GND to GND Rail
 * HW-193 RV to ATMEGA pin 16 (see the `Attack_Identification/ATMEGA_Pinout.png` file)
 * HW-193 5V to ATMEGA pin 17
 
-This discovery was made thanks to the proximity of the TX and RX pins. Should these pins be far away from each other, the time needed for the discovery would have been greater.
+This discovery was made thanks to the proximity of the TX and RX pins. Should these pins be far away from each other, the time needed for the discovery would have been far greater.
 
 The Arduino Uno board should be disconnected in this configuration since the input voltage will come from the HW-193 module.
 
-Here is the message that shows up when connected to the Serial Monitor and the message received when typing a wrong password.
+Below is the message appearing when serial connection is established as well as the message received when typing a wrong password.
 
 ![Password\_Request](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/Enter_Password_Request.png)
 
@@ -102,7 +101,7 @@ We have thus found the main entry point!
 
 ### 2.1 Description
 
-A power analysis attack on an embedded platform measures tiny variations of power consumption during operations to extract secret data like a password in our case. It exploits physical leakage which will be measured by our chipwhisperer nano in order to analyse the traces.
+A power analysis attack on an embedded platform measures tiny variations of power consumption during the operations of the platform. The goal to extract secret data, a password in our case. It exploits physical leakage which will be measured by our chipwhisperer nano in order to analyse the traces.
 
 ### 2.2 Setup of the chipwhisperer
 
@@ -124,14 +123,14 @@ A power analysis attack on an embedded platform measures tiny variations of powe
 | Left Pin MEASURE   | GND Rail               | /           |
 | Middle Pin MEASURE | Pin 7 (ATMEGA VCC pin) | /           |
 
-Here is the CWNano up close.
+Below is the CWNano up close.
 ![CWNano\_up\_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Up_Close.png) <br/>
-Here is the ATMEGA pinout in case you need help.
+Additionnally, below is the ATMEGA pinout.
 ![ATMEGA\_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Pinout.jpg) <br/>
 
 ### 2.3 Power Traces Analysis
 
-*(Content placeholder — original document lists steps / observations here.)*
+
 
 ### 2.4 Results of the attack
 
