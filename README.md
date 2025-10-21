@@ -203,7 +203,7 @@ Here below are the traces of "a", "abc" and "abcdef" compared to the trace of "f
 ![First_power_Traces](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/f_a_abc_abcdef_Delay_Comparison.png
 ) 
 
-It is clear that the input of a correct character extends the computing time. The peaks are shifted and the measure of this shift indicates if the character is correct or not. The next step is to define a method to compute the shift of the trace.
+It is clear that the input of a correct character extends the computing time. There is most likely a loop in the source code where each character is checked one after another and the code doesn't leave the loop until it a wrong character is detected in the string. Therefore, greater shift of the peaks of this power trace indicates if the character is correct or not. The next step is thus to define a method to compute the shift of the trace.
 
 ```python
 import numpy as np
@@ -267,9 +267,18 @@ for _ in range(0, 10):
 
 ```
 
+The output of this code is shown on the image here under.
 
 ### 2.4 Results of the attack
 
+
+
+![Password_retrieval](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/Password_retrieval_script_output.png)
+
+The next figure shows the complete comparison of delays for a variety of guesses. Each time correct characters are added to the password, the shift is greater. 
+
+
+![Complete_delay_comparison](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/Complete_Delay_Comparison.png)
 
 
 ### 2.5 Discussion of countermeasures
