@@ -132,12 +132,76 @@ Additionnally, below is the ATMEGA pinout.
 <br/>
 
 ### 2.3 Power Traces Analysis
+The only hint in our possession regarding the password is the first letter, "f". The logical first step is to plot the power trace of "f" and compare it to a wrong input. This is done when executing the following code.
+```python
+import chipwhisperer as cw
+import matplotlib.pyplot as plt
+import numpy as np
+import time
 
+# Setup of scope and target
+scope = cw.scope()
+target = cw.target(scope, cw.targets.SimpleSerial2)
+target.baud = 9600
+scope.default_setup()
+scope.adc.samples = 10000
+
+############################################################################################################
+
+def capture(guess):
+    print(f"Arm scope for {guess}...")
+    scope.arm()
+    time.sleep(0.01)
+    print(f"Sending '{guess}'...")
+    target.ser.write(guess.encode() + b"\n")
+    ret = scope.capture()
+    if ret:
+        print(f"Timeout during capture of '{guess}'")
+        return None
+    trace = scope.get_last_trace()
+    print(f"Trace '{guess}' captured: {len(guess)} samples")
+    time.sleep(1)
+    return trace
+
+
+############################################################################################################
+trace_a = capture("a")
+trace_f = capture("f")
+trace_abc = capture("abc")
+trace_abcdef = capture("abcdef")
+
+#To be executed after retrieval of password for delay comparison
+# trace_f7_dash = capture("f7-")
+# trace_f7_dash_at_Jp = capture("f7-@Jp")
+# trace_right_pw = capture("f7-@Jp0w")
+
+############################################################################################################
+
+#To be executed after retrieval of password for delay comparison
+# if trace_f is not None and trace_a is not None and trace_abcdef is not None and trace_abc is not None and trace_f7_dash is not None and  trace_f7_dash_at_Jp is not None and trace_right_pw is not None:
+
+if trace_f is not None and trace_a is not None and trace_abcdef is not None and trace_abc is not None:
+    plt.figure(figsize=(15, 8))
+
+    plt.subplot(7, 1, 1); plt.plot(trace_a, 'r-', linewidth=0.5); plt.title("Power trace for 'a'"); plt.ylabel("Amplitude"); plt.grid(True, alpha=0.3)
+    plt.subplot(7, 1, 2); plt.plot(trace_abc, 'r-', linewidth=0.5); plt.title("Power trace for abc"); plt.ylabel("Amplitude"); plt.grid(True, alpha=0.3)
+    plt.subplot(7, 1, 3); plt.plot(trace_abcdef, 'r-', linewidth=0.5); plt.title("Power trace for abcdef"); plt.ylabel("Amplitude"); plt.grid(True, alpha=0.3)
+    plt.subplot(7, 1, 4); plt.plot(trace_f, 'b-', linewidth=0.5); plt.title("Power trace for 'f'"); plt.ylabel("Amplitude"); plt.grid(True, alpha=0.3)
+    # plt.subplot(7, 1, 5); plt.plot(trace_f7_dash, 'b-', linewidth=0.5); plt.title("Power trace for f7-"); plt.ylabel("Amplitude"); plt.grid(True, alpha=0.3)
+    # plt.subplot(7, 1, 6); plt.plot(trace_f7_dash_at_Jp, 'b-', linewidth=0.5); plt.title("Power trace for f7-@J"); plt.ylabel("Amplitude"); plt.grid(True, alpha=0.3)
+    # plt.subplot(7, 1, 7); plt.plot(trace_right_pw, 'g-', linewidth=0.5); plt.title("Power trace for f7-@Jp0"); plt.ylabel("Amplitude"); plt.grid(True, alpha=0.3)
+
+    plt.tight_layout(); plt.show()
+
+
+else:
+    print("Error : Incomplete capture of traces")
+```
 
 
 ### 2.4 Results of the attack
 
-*(Content placeholder — original document lists results here.)*
+
 
 ### 2.5 Discussion of countermeasures
 
