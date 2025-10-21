@@ -119,7 +119,7 @@ A power analysis attack on an embedded platform measures tiny variations of powe
 | Pin 8 (VRef)       | VCC Rail               | 5V Pin      |
 | Pin 10 (UART RX)   | Pin 17 (UART TX)       | /           |
 | Pin 12 (UART TX)   | Pin 16 (UART RX)       | /           |
-| Pin 16(Trigger input)| Pin 19                | Pin 13      |
+| Pin 16 (Trigger input) | Pin 19             | Pin 13      |
 | Left Pin MEASURE   | GND Rail               | /           |
 | Middle Pin MEASURE | Pin 7 (ATMEGA VCC pin) | /           |
 
