@@ -89,7 +89,7 @@ This discovery was made thanks to the proximity of the TX and RX pins. Should th
 
 The Arduino Uno board should be disconnected in this configuration since the input voltage will come from the HW-193 module.
 
-Below is the message appearing when serial connection is established as well as the message received when typing a wrong password.
+Un next is the message appearing when serial connection is established as well as the message received when typing a wrong password.
 
 ![Password\_Request](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/Enter_Password_Request.png)
 
@@ -124,10 +124,12 @@ A power analysis attack on an embedded platform measures tiny variations of powe
 | Middle Pin MEASURE | Pin 7 (ATMEGA VCC pin) | /           |
 
 Below is the CWNano up close.
+
 ![CWNano\_up\_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Up_Close.png) 
 <br/>
 
 Additionnally, below is the ATMEGA pinout.
+
 ![ATMEGA\_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Pinout.jpg) 
 <br/>
 
@@ -199,7 +201,8 @@ if trace_f is not None and trace_a is not None and trace_abcdef is not None and 
 else:
     print("Error : Incomplete capture of traces")
 ```
-Here below are the traces of "a", "abc" and "abcdef" compared to the trace of "f".
+The next picture represents the traces of "a", "abc" and "abcdef" compared to the trace of "f".
+
 ![First_power_Traces](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/f_a_abc_abcdef_Delay_Comparison.png
 ) 
 
