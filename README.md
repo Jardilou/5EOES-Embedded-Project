@@ -1,8 +1,8 @@
 # 5EOES-Embedded-Project
-The goal of this project is to assess the course of Embedded Security describing how to operate attacks to crack a password on an embedded target using a chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware.
+   The goal of this project is to assess the course of Embedded Security describing how to operate attacks to crack a password on an embedded target using a chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware.
 
 ## 0. Preliminary Work
-The very first step is to flash the unidentified firmware (see Preliminary_Work/secure_sketch_v20251015.1.elf) on the arduino uno. 
+   The very first step is to flash the unidentified firmware (see Preliminary_Work/secure_sketch_v20251015.1.elf) on the arduino uno. 
 This is done using the following command :
 <pre>
 .\avrdude.exe -v -patmega328p -carduino -P COMXX -b115200 -Uflash:w:secure_sketch_v20251015.1.elf 
@@ -11,7 +11,7 @@ using the right COM port as COMXX and entering the command in the same folder as
 
 The second step is to download the chipwhisperer toolchain following this guide : https://chipwhisperer.readthedocs.io/en/latest/
 
-Once the toolchain is setup, before entering the attack identification phase, in order to avoid having the STM32F0 GPIOs driven by the CW-Nano when interacting with our external target, we should set them as high impedance. This is done by :
+   Once the toolchain is setup, before entering the attack identification phase, in order to avoid having the STM32F0 GPIOs driven by the CW-Nano when interacting with our external target, we should set them as high impedance. This is done by :
 1. Creating a new folder in our chipwhisperer path named firmware/mcu/stm32-gpio-tristate.
 2. Putting the gpio_tristate.c and Makefile.txt (see the Preliminary_Work folder) files in this new folder.
 3. Running the following code :
@@ -39,28 +39,32 @@ except IOError:
 cw.program_target(scope, cw.programmers.STM32FProgrammer, "../../firmware/mcu/stm32-gpio-tristate/gpio-tristate-{}.hex".format(PLATFORM))
 </pre>
 
-Once this is done, let us inspect what shows up on the Serial Monitor.
+   Once this is done, below is what should show up on the Serial Monitor.
 
 ## 1. Attack Identification
-When connecting the Arduino Uno in a classic setup, the following message would show up.
+
+   When connecting the Arduino Uno in a classic setup, the following message would show up.
 <br/>
 ![Serial Monitor](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/welcome_to_the_vault.png)
 <br/>
-We conclude that there is a hidden channel, probably UART On the pins of the ATMEGA328p.
+
+   We conclude that there is a hidden channel, probably UART On the pins of the ATMEGA328p.
 
 <br/>
-To detect a hidden channel, we connect a USB to TTL UART Uploader Module CH340G HW-193.
+   To detect a hidden channel, we connect a USB to TTL UART Uploader Module CH340G HW-193.
 
 ![CH340G HW-193](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/CH340G_HW-193.jpg)
 <br/>
 
-The next step for us is to remove the ATMEGA328p microcontroller and to cable it like on the following schematic. The values of the resistors is 100 Ohms and the values of the capacitances need to be between 100 and 300 µF.
+   The next step for us is to remove the ATMEGA328p microcontroller and to cable it in the same way as the following schematic. The value of the resistors is 100 Ohms and the values of the capacitors must be between 100 and 300 µF.
 <br/>
 
 The schematic will be detailed in the Power Analysis section.
+
 <br/>
 ![ATMEGA_Breadboard](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Breadboard_Circuit.png)
 <br/>
+
 After a series of tries and errors in order to find the secret UART channel, we discovered that the USB-UART HW-193 module should be connected as such :
 <br/>
 - HW-193 5V to VCC Rail
