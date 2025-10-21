@@ -269,11 +269,15 @@ for _ in range(0, 10):
 
 The output of this code is shown on the image here under.
 
+
 ### 2.4 Results of the attack
 
 
 
 ![Password_retrieval](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/Password_retrieval_script_output.png)
+
+
+It is important to note that since the length of the password is unknown, each of these attempts must be tested by connecting the serial connection. For the salt and hash retrieval, see [Analysis of the output](#3.2-analysis-of-the-output).
 
 The next figure shows the complete comparison of delays for a variety of guesses. Each time correct characters are added to the password, the shift is greater. 
 
@@ -282,8 +286,6 @@ The next figure shows the complete comparison of delays for a variety of guesses
 
 
 ### 2.5 Discussion of countermeasures
-
-*(Content placeholder — original document lists countermeasures here.)*
 
 ---
 
