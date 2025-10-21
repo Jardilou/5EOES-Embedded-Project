@@ -140,7 +140,7 @@ Here is the ATMEGA pinout in case you need help.
 Justification of the attacks regarding the vulnerabilities
 ## 5. Vulnerability Assessment Score
 
-### Power trace side-channel analysis
+### 5.1 Power trace side-channel analysis
 
 This table captures CVSS 4.0 metrics for threat modeling purposes.
 
@@ -148,56 +148,45 @@ This table captures CVSS 4.0 metrics for threat modeling purposes.
 
 | Metric | Value | Justification |
 |--------|-------|---------------|
-| **AV — Attack Vector** | | Describe how physically close the attacker must be to the system |
-| **AC — Attack Complexity** | | Explain conditions outside attacker control required for exploit |
-| **AT — Attack Requirements** | | Note any victim-controlled prerequisites needed |
-| **PR — Privileges Required** | | State level of credentials required before exploit |
-| **UI — User Interaction** | | Indicate whether the victim must act for the attack to succeed |
+| **AV — Attack Vector** | Physical | Attack needs physical access to the embedded platform |
+| **AC — Attack Complexity** | Low | Sending a simple binary password yields a response. Once setup, pretty straightforward |
+| **AT — Attack Requirements** | None | No victim-controlled prerequisites needed |
+| **PR — Privileges Required** | None | No authentication or access needed before exploit |
+| **UI — User Interaction** | None | No interaction from the victim for the attack to succeed |
 
 Vulnerable System Impact Metrics
 
 | Metric | Value | Justification |
 |--------|-------|---------------|
-| **VC — Confidentiality** | | Describe extent of data exposure on the affected system |
-| **VI — Integrity** | | Describe extent of data or code modification possible |
-| **VA — Availability** | | Describe extent of system service disruption possible |
+| **VC — Confidentiality** | Low | Only the hash and salt is retrieved |
+| **VI — Integrity** | None | No data or code modification possible |
+| **VA — Availability** | None | No system service disruption possible |
 
-Subsequent System Impact Metrics
+Subsequent System Impact Metrics : No subsequent systems
 
-| Metric | Value | Justification |
-|--------|-------|---------------|
-| **SC — Confidentiality (Subsequent)** | | Note potential for data exposure on other systems after compromise |
-| **SI — Integrity (Subsequent)** | | Note potential for modification of external systems |
-| **SA — Availability (Subsequent)** | | Note potential for disruption of other systems or services |
 
 ---
 
-2. Environmental Metrics - Security Requirements
+2. Supplemental Metrics
 
 | Metric | Value | Justification |
 |--------|-------|---------------|
-| **CR — Confidentiality Requirement** | | Describe importance of confidentiality in your environment |
-| **IR — Integrity Requirement** | | Describe importance of data correctness in your environment |
-| **AR — Availability Requirement** | | Describe importance of uptime/service continuity |
+| **S — Safety** | Negligible | No real potential physical injury or safety impact |
+| **AU — Automatable** | Yes | Exploit can be automated at scale |
+| **R — Recovery** | User | The system requires the user to flash a new firmware in case of successful attack |
+| **V — Value Density** | Diffuse | A single platform is hacked in comparison to a central system for example |
+| **RE — Vulnerability Response Effort** | High | Platforms need to be recalled and reflashed |
+| **U — Provider Urgency** | Not defined | Note priority for vendor to remediate |
 
+3. Environmental Metrics - Security Requirements : no additional environment
 ---
 
-3. Threat Metrics (Temporal)
+4. Threat Metrics (Temporal)
 
 | Metric | Value | Justification |
 |--------|-------|---------------|
-| **E — Exploit Maturity** | | Indicate whether exploit is Attacked, POC, or Reported |
+| **E — Exploit Maturity** | POC | The exploit works but is not deployed at scale |
 
----
+All these metrics sum to a CVSS score of 0.3, which is very low.
 
-4. Supplemental Metrics
-
-| Metric | Value | Justification |
-|--------|-------|---------------|
-| **S — Safety** | | Note potential for physical injury or safety impact |
-| **AU — Automatable** | | Indicate whether exploitation can be automated at scale |
-| **R — Recovery** | | Describe ease of recovery after attack |
-| **V — Value Density** | | Note value concentration of the targeted asset |
-| **RE — Vulnerability Response Effort** | | Describe effort required by provider to respond or patch |
-| **U — Provider Urgency** | | Note priority for vendor to remediate |
-
+### 5.2 Firmware analysis
