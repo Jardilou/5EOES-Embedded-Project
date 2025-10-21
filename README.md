@@ -132,7 +132,9 @@ Additionnally, below is the ATMEGA pinout.
 <br/>
 
 ### 2.3 Power Traces Analysis
-The only hint in our possession regarding the password is the first letter, "f". The logical first step is to plot the power trace of "f" and compare it to a wrong input. This is done when executing the following code.
+The only hint in our possession regarding the password is the first letter, "f". Initially, the approach was to observe is there were any peaks of consumption when the right letter was sent. Unfortunately, this line of inquiry did not lead to conclusive results because of the therefore another approach was considered. This will be detailed hereunder.
+
+In any case, the logical first step is to plot the power trace of "f" and compare it to a wrong input. This is done when executing the following code.
 ```python
 import chipwhisperer as cw
 import matplotlib.pyplot as plt
@@ -196,6 +198,73 @@ if trace_f is not None and trace_a is not None and trace_abcdef is not None and 
 
 else:
     print("Error : Incomplete capture of traces")
+```
+Here below are the traces of "a", "abc" and "abcdef" compared to the trace of "f".
+![First_power_Traces](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/f_a_abc_abcdef_Delay_Comparison.png
+) 
+
+It is clear that the input of a correct character extends the computing time. The peaks are shifted and the measure of this shift indicates if the character is correct or not. The next step is to define a method to compute the shift of the trace.
+
+```python
+import numpy as np
+from scipy.signal import correlate
+
+
+def estimate_sample_shift(trace, reference):
+    """
+    Returns the best estimated horizontal shift (in samples)
+    needed to align `trace` to `reference`.
+    Positive shift => trace is delayed (shifted right).
+    """
+    corr = correlate(trace, reference, mode='full')
+    lag = np.argmax(corr) - (len(reference) - 1)
+    return lag
+
+```
+
+The only step left is to automate a password attack. It is the purpose of the code below 
+
+
+```python
+def capture_trace(password_attempt):
+    """Capture power trace for a given password attempt"""
+    scope.arm()
+    time.sleep(0.01)
+    
+    # Send password attempt
+    target.ser.write(password_attempt + b"\n")
+    
+    ret = scope.capture()
+    if ret:
+        print(f"  ⚠ Timeout for '{password_attempt}'")
+        return None
+    
+    trace = scope.get_last_trace()
+    time.sleep(0.5)  # Small delay between captures
+    return trace
+
+guessed_pw = b""                   
+for _ in range(0, 10):
+
+    biggest_shift = 0
+    biggest_char = b"a"           
+
+    ref_trace = capture_trace(b"a\n")  
+    # List of ASCII characters 33 to 127 except for \ as it resulted in errors
+    for c in b"!#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~":
+        # Computes the traces and offset with the trace of letter "a" for each character
+        trace_c = capture_trace(guessed_pw + bytes([c]) )
+        shift = estimate_sample_shift(trace_c, ref_trace)
+        # If the shift between the trace of c and of "a" is greater than that of any other character, it is added to the password string
+        if shift > biggest_shift:
+            biggest_shift = shift
+            biggest_char = bytes([c])
+
+
+    
+    guessed_pw += biggest_char
+    print(guessed_pw)
+
 ```
 
 
