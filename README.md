@@ -187,6 +187,55 @@ Subsequent System Impact Metrics : No subsequent systems
 |--------|-------|---------------|
 | **E — Exploit Maturity** | POC | The exploit works but is not deployed at scale |
 
-All these metrics sum to a CVSS score of 0.3, which is very low.
+All these parameters sum up to a CVSS score of 0.3, which is very low.
 
 ### 5.2 Firmware analysis
+
+Since the target as well as its secrets remains the same, most of these parameters will remain the same.
+
+1. Base Metrics
+
+| Metric | Value | Justification |
+|--------|-------|---------------|
+| **AV — Attack Vector** | Physical | Attacker exploits the vulnerability by acdessing target through terminal |
+| **AC — Attack Complexity** | Low | Once environment setup with the tools and firmware, 1 line of code is required |
+| **AT — Attack Requirements** | Present | Victim-controlled prerequisites needed : firmware needs to be available |
+| **PR — Privileges Required** | None | No authentication or access needed before exploit |
+| **UI — User Interaction** | None | No interaction from the victim for the attack to succeed |
+
+Vulnerable System Impact Metrics
+
+| Metric | Value | Justification |
+|--------|-------|---------------|
+| **VC — Confidentiality** | High | Hash and salt are retrieved as well as the secret "Je suis une petite tortue"|
+| **VI — Integrity** | None | No data or code modification possible |
+| **VA — Availability** | None | No system service disruption possible |
+
+Subsequent System Impact Metrics : No subsequent systems
+
+
+---
+
+2. Supplemental Metrics
+
+| Metric | Value | Justification |
+|--------|-------|---------------|
+| **S — Safety** | Negligible | No real potential physical injury or safety impact |
+| **AU — Automatable** | Yes | Exploit can be automated at scale |
+| **R — Recovery** | User | The system requires the user to flash a new firmware in case of successful attack |
+| **V — Value Density** | Diffuse | A single platform is hacked in comparison to a central system for example |
+| **RE — Vulnerability Response Effort** | High | Platforms need to be recalled and reflashed |
+| **U — Provider Urgency** | Not defined | Note priority for vendor to remediate |
+
+3. Environmental Metrics - Security Requirements : no additional environment
+---
+
+4. Threat Metrics (Temporal)
+
+| Metric | Value | Justification |
+|--------|-------|---------------|
+| **E — Exploit Maturity** | POC | The exploit works but is not deployed at scale |
+
+All these metrics sum to a CVSS score of 5, which is medium.
+
+## 5. Sources
