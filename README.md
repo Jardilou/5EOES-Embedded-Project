@@ -448,9 +448,8 @@ All these metrics sum to a CVSS score of **5**, which is medium.
 ---
 
 ## 5. Sources
-
-*(Original document's sources list goes here.)*
-
----
-
+- NewAE Technology Inc., “CW1101 ChipWhisperer-Nano,” ChipWhisperer Documentation, 2015-2025. [Online]. Available: https://rtfm.newae.com/Capture/ChipWhisperer-Nano/
+- E. Odunlade, “Perform Power Analysis Side-Channel Attacks with the ChipWhisperer-Nano,” Electronics-Lab.com, 18 Nov. 2019. [Online]. Available: https://www.electronics-lab.com/perform-power-analysis-side-channel-attacks-chipwhisperer-nano/
+- NewAE Technology Inc., “20-Pin Connector — ChipWhisperer Documentation,” ChipWhisperer ReadTheDocs, Copyright 2023–2025. [Online]. Available: https://chipwhisperer.readthedocs.io/en/v6.0.0b/Capture/20-pin-connector.html#id15
+- National Vulnerability Database, “CVSS v4.0 Calculator,” NVD – Vulnerability Metrics, U.S. NIST. [Online]. Available: https://nvd.nist.gov/vuln-metrics/cvss/v4-calculator
 
