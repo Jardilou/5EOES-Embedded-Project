@@ -448,7 +448,7 @@ Exploits set up:
 * Firmware analysis
 * Side-channel power traces analysis
 
-![Attack\_tree](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Additional_Content/ES_Project_Attack_Tree.draw.io.png)
+![Attack\_tree](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Additional_Content/ES_Project_Attack_Tree.drawio.png)
 
 ---
 
