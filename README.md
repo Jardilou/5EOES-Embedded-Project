@@ -10,7 +10,7 @@
 * [Attack Identification](#1-attack-identification)
 * [Power Analysis](#2-power-analysis)
 * [Firmware Analysis](#3-firmware-analysis)
-* [Discussion of Countermeasures](#4-discussion-fo-countermeasures)
+* [Discussion of Countermeasures](#4-discussion-of-countermeasures)
 * [Final Attack Tree](#5-final-attack-tree)
 * [Vulnerability Assessment Score](#6-vulnerability-assessment-score)
 * [Sources](#7-sources)
