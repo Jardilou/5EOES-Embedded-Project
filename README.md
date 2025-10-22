@@ -10,9 +10,10 @@
 * [Attack Identification](#1-attack-identification)
 * [Power Analysis](#2-power-analysis)
 * [Firmware Analysis](#3-firmware-analysis)
-* [Final Attack Tree](#4-final-attack-tree)
-* [Vulnerability Assessment Score](#5-vulnerability-assessment-score)
-* [Sources](#5-sources)
+* [Discussion of Countermeasures](#4-discussion-fo-countermeasures)
+* [Final Attack Tree](#5-final-attack-tree)
+* [Vulnerability Assessment Score](#6-vulnerability-assessment-score)
+* [Sources](#7-sources)
 
 ---
 
@@ -291,9 +292,6 @@ The next figure shows the complete comparison of delays for a variety of guesses
 
 ![Complete_delay_comparison](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/Complete_Delay_Comparison.png)
 
-
-### 2.5 Discussion of countermeasures
-
 ---
 
 ## 3. Firmware Analysis
@@ -328,13 +326,10 @@ This attack is thus more damaging than the aforementioned Power Trace Analysis A
 
 ![Im\_in2](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/salt_and_hash.png) <br/>
 
-### 3.3 Countermeasures to implement
+## 4. Discussion of countermeasures
 
-3.3 Countermeasures to implement
 
----
-
-## 4. Final Attack Tree
+## 5. Final Attack Tree
 
 Here are the vulnerabilities identified:
 
@@ -350,9 +345,9 @@ Exploits set up:
 
 ---
 
-## 5. Vulnerability Assessment Score
+## 6. Vulnerability Assessment Score
 
-### 5.1 Power trace side-channel analysis
+### 6.1 Power trace side-channel analysis
 
 This table captures CVSS 4.0 metrics for threat modeling purposes.
 
@@ -403,7 +398,7 @@ All these parameters sum up to a CVSS score of **0.3**, which is very low.
 
 ---
 
-### 5.2 Firmware analysis
+### 6.2 Firmware analysis
 
 Since the target as well as its secrets remains the same, most of these parameters will remain the same.
 
@@ -454,7 +449,7 @@ All these metrics sum to a CVSS score of **5**, which is medium.
 
 ---
 
-## 5. Sources
+## 7. Sources
 - NewAE Technology Inc., “CW1101 ChipWhisperer-Nano,” ChipWhisperer Documentation, 2015-2025. [Online]. Available: https://rtfm.newae.com/Capture/ChipWhisperer-Nano/
 - E. Odunlade, “Perform Power Analysis Side-Channel Attacks with the ChipWhisperer-Nano,” Electronics-Lab.com, 18 Nov. 2019. [Online]. Available: https://www.electronics-lab.com/perform-power-analysis-side-channel-attacks-chipwhisperer-nano/
 - NewAE Technology Inc., “20-Pin Connector — ChipWhisperer Documentation,” ChipWhisperer ReadTheDocs, Copyright 2023–2025. [Online]. Available: https://chipwhisperer.readthedocs.io/en/v6.0.0b/Capture/20-pin-connector.html#id15
