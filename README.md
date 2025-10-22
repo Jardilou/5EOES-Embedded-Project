@@ -208,7 +208,9 @@ The next picture represents the traces of "a", "abc" and "abcdef" compared to th
 ![First_power_Traces](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/f_a_abc_abcdef_Delay_Comparison.png
 ) 
 
-It is clear that the input of a correct character extends the computing time. There is most likely a loop in the source code where each character is checked one after another and the code doesn't leave the loop until it a wrong character is detected in the string. Therefore, greater shift of the peaks of this power trace indicates if the character is correct or not. The next step is thus to define a method to compute the shift of the trace.
+It is clear that the input of a correct character extends the computing time. There is most likely a loop in the source code where each character is checked one after another and the code doesn't leave the loop until it a wrong character is detected in the string. Therefore, greater shift of the peaks of this power trace indicates if the character is correct or not.
+
+This analysis method is therefore not a power analysis per se, but in reality more of a timing analysis on the power traces. The next step is thus to define a method to compute the shift of the trace.
 
 ```python
 import numpy as np
