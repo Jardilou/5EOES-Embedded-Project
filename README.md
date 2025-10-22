@@ -426,6 +426,7 @@ The complete code can be found in the folder `Countermeasures/Countermeasures.in
 The next figure shows the content of the `.data` secion retrieved using the method previously mentioned.
 
 ![data_cm](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Countermeasures/images/.data_section_countermeasures.png)
+
 Although the secret text is still present (it is necessary to generate random hash and salt), the plaintext password disappeared completely from the section. The method using strings yielded the same results (see `Countermeasures/extracted_strings_after_countermeasures.txt`).
 
 Regarding the power traces, the constant-time implementation makes it obsolete since no shift can be observed. Therefore, the passwords retrieved will be random.
