@@ -322,11 +322,72 @@ The output I got from this command is detailed here below.
 Among this file was a succession of random characters closely resembling to a password. Hmm, I wonder if this could be it...
 
 I reconnected my serial connection using the HW-193. What a surprise: a salt and hash appeared just before my eyes. Moreover, the previous image showing the content of the `.data` section exposed the very well kept secret **"Je suis une petite tortue"**, confirming indeed that my professor is, in fact, a small turtle.
-This attack is thus more damaging than the aforementioned Power Trace Analysis Attack since it exposed not only the password to the vault but the secrets as well.
+This attack is thus more damaging than the aforementioned Power Trace Analysis Attack since it exposed not only the password to the vault but the secrets as well. This secret was used only to generate random salt and hashes but in concept, this attack is able to retrieve any sensitive information written in plaintext in the file.
 
 ![Im\_in2](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/salt_and_hash.png) <br/>
 
 ## 4. Discussion of countermeasures
+
+### 4.1 Password stored in hash and salt
+The password should therefore not be stored in plaintext inside the `.ino` file. The method to implement this countermeasure is to locally compute the hash of the password (Note : it remains unchanged  between the initial version and the version with countermeasures implementation). Once it is computed, the hash and salt are hard-coded as byte arrays.   
+
+### 4.2 Constant-timing password comparison
+In order to counter the power trace timing analysis attack, it is needed to implement constant-time password comparison of the password sent by UART with the hash and salt of the password stored in the file mentioned here above. 
+
+The way to implement these countermeasures is the following :
+
+```cpp
+
+const uint8_t SAVED_SALT[] PROGMEM = {
+  0x12, 0x34, 0x56, 0x78
+};
+
+//Hash of my password
+const uint8_t SAVED_HASH[] PROGMEM = {
+  0x81, 0xB4, 0x4C, 0xAE, 0x27, 0x0C, 0xB3, 0x31,
+  0x27, 0xAD, 0xD7, 0x8C, 0x8C, 0x5A, 0xA7, 0xF5,
+  0x95, 0x26, 0xF5, 0xE4, 0xBA, 0xF2, 0x8B, 0x20,
+  0x5D, 0x1D, 0x9B, 0x0F, 0xA7, 0xE9, 0x40, 0x35
+};
+
+// Compute SHA3-256(salt || passwordAttempt) into outDigest
+void hashAttemptWithSalt(const char *attempt, const uint8_t *salt, size_t saltLen, uint8_t *outDigest) {
+  SHA3_256 sha3;
+  sha3.reset();
+  sha3.update(salt, saltLen);
+  sha3.update((const uint8_t *)attempt, strlen(attempt));
+  sha3.finalize(outDigest, 32);
+}
+
+// Constant-time compare: returns true iff a == b (both len bytes)
+bool consttime_eq(const uint8_t *a, const uint8_t *b, size_t len) {
+  uint8_t diff = 0;
+  for (size_t i = 0; i < len; ++i) {
+    diff |= a[i] ^ b[i];
+  }
+  // diff == 0 => equal
+  // We return (diff == 0) without any branching that depends on contents
+  return diff == 0;
+}
+
+bool check_password_attempt(const char *attempt) {
+  // load salt from PROGMEM
+  uint8_t salt[4];
+  for (size_t i = 0; i < sizeof(salt); ++i) salt[i] = pgm_read_byte_near(SAVED_SALT + i);
+
+  // compute hash of salt || attempt
+  hashAttemptWithSalt(attempt, salt, sizeof(salt), digest);
+
+  // load stored hash from PROGMEM
+  uint8_t stored[32];
+  for (size_t i = 0; i < sizeof(stored); ++i) stored[i] = pgm_read_byte_near(SAVED_HASH + i);
+
+  // constant-time compare
+  return consttime_eq(digest, stored, 32);
+}
+
+
+```
 
 
 ## 5. Final Attack Tree
