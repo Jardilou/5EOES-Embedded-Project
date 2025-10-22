@@ -285,7 +285,7 @@ The output of this code is shown on the image here under.
 ![Password_retrieval](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/Password_retrieval_script_output.png)
 
 
-It is important to note that since the length of the password is unknown, each of these attempts must be tested by connecting the serial connection. For the salt and hash retrieval, see section * [Firmware Analysis](#3-firmware-analysis).
+It is important to note that since the length of the password is unknown, each of these attempts must be tested by connecting the serial connection. For the salt and hash retrieval, see section [Firmware Analysis](#3-firmware-analysis).
 
 The next figure shows the complete comparison of delays for a variety of guesses. Each time correct characters are added to the password, the shift is greater. To get the complete figure, simply decomment the corresponding line on the code previously discussed.
 
