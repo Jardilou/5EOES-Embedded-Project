@@ -329,10 +329,14 @@ This attack is thus more damaging than the aforementioned Power Trace Analysis A
 ## 4. Discussion of countermeasures
 
 ### 4.1 Password stored in hash and salt
+
 The password should therefore not be stored in plaintext inside the `.ino` file. The method to implement this countermeasure is to locally compute the hash of the password (Note : it remains unchanged  between the initial version and the version with countermeasures implementation). Once it is computed, the hash and salt are hard-coded as byte arrays.   
 
 ### 4.2 Constant-timing password comparison
+
 In order to counter the power trace timing analysis attack, it is needed to implement constant-time password comparison of the password sent by UART with the hash and salt of the password stored in the file mentioned here above. 
+
+### 4.3 Implementation
 
 The way to implement these countermeasures is the following :
 
@@ -350,6 +354,12 @@ const uint8_t SAVED_HASH[] PROGMEM = {
   0x5D, 0x1D, 0x9B, 0x0F, 0xA7, 0xE9, 0x40, 0x35
 };
 
+```
+
+The hash is a 32-byte value and the salt is a 4-byte value. They are stored on the program memory. On Arduino platforms, PROGMEM tells the compiler to keep the bytes in flash instead of RAM.
+
+```cpp
+
 // Compute SHA3-256(salt || passwordAttempt) into outDigest
 void hashAttemptWithSalt(const char *attempt, const uint8_t *salt, size_t saltLen, uint8_t *outDigest) {
   SHA3_256 sha3;
@@ -358,7 +368,11 @@ void hashAttemptWithSalt(const char *attempt, const uint8_t *salt, size_t saltLe
   sha3.update((const uint8_t *)attempt, strlen(attempt));
   sha3.finalize(outDigest, 32);
 }
+```
 
+This function computes concatenated salt and attempt and writes the 32-byte result into outDigest. This result will be compared with the salt and hash stored in the cell above.
+
+```cpp
 // Constant-time compare: returns true iff a == b (both len bytes)
 bool consttime_eq(const uint8_t *a, const uint8_t *b, size_t len) {
   uint8_t diff = 0;
@@ -369,7 +383,18 @@ bool consttime_eq(const uint8_t *a, const uint8_t *b, size_t len) {
   // We return (diff == 0) without any branching that depends on contents
   return diff == 0;
 }
+```
 
+This function compares two byte arrays to check for equality but the time required for computation has to remain constant, regardless of how many bytes match. This means that no early exit is implemented to get out of the loop. 
+
+The operation `a[i]^b[i]` is a `XOR` operation : each byte of a is compared with the corresponding byte of b. If the bytes are equal, XOR gives 0. If they are different, `XOR` gives some non-zero value. 
+
+`diff` will store whether there is any difference between the two arrays. It is initialized to 0 meaning "no difference yet". 
+`diff |= ...` is a `bitwise OR` operation :
+If `diff` equals 0 and bytes differ, `diff` becomes non-zero. If `diff` is already non-zero, it stays non-zero.
+By the end of the loop, `diff` equals 0 if and only if all bytes matched. In opposition to a `return false`, this implementation ensures that the execution time doesn't depend on the first mismatch, thus rendering the timing analysis impossible.
+
+```cpp
 bool check_password_attempt(const char *attempt) {
   // load salt from PROGMEM
   uint8_t salt[4];
@@ -386,8 +411,29 @@ bool check_password_attempt(const char *attempt) {
   return consttime_eq(digest, stored, 32);
 }
 
-
 ```
+This function :
+1. Reads the salt from flash into a RAM buffer salt[4] using pgm_read_byte_near (this function comes from the AVR API). Each of the 4 bytes are copied from SAVED_SALT into RAM.
+2. Computes hash: call the aforementioned hashAttemptWithSalt(attempt, salt, sizeof(salt), digest) function to compute the digest SHA3-256(salt || attempt).
+3. Reads previously stored hash from flash into stored[32].
+4. Compares computed digest with stored using the constant-time consttime_eq. Return true if equal (password correct), else false.
+It will be called in the `void loop()` function in order to check the input password.
+
+The complete code can be found in the folder `Countermeasures/Countermeasures.ino`, as well as the `.elf` file.
+
+### 4.4 Results
+
+The next figure shows the content of the `.data` secion retrieved using the method previously mentioned.
+
+![data_cm](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Countermeasures/images/.data_section_countermeasures.png)
+Although the secret text is still present (it is necessary to generate random hash and salt), the plaintext password disappeared completely from the section. The method using strings yielded the same results (see `Countermeasures/extracted_strings_after_countermeasures.txt`).
+
+Regarding the power traces, the constant-time implementation makes it obsolete since no shift can be observed. Therefore, the passwords retrieved will be random.
+
+![power_traces_cm](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Countermeasures/images/power_traces_offset_countermeasures.png
+)
+
+![passwd_guess_cm](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Countermeasures/images/password_guess_countermeasures.png)
 
 
 ## 5. Final Attack Tree
