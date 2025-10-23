@@ -378,8 +378,8 @@ bool consttime_eq(const uint8_t *a, const uint8_t *b, size_t len) {
   for (size_t i = 0; i < len; ++i) {
     diff |= a[i] ^ b[i];
   }
-  // diff == 0 => equal
-  // We return (diff == 0) without any branching that depends on contents
+  // diff == 0 means a equals b
+  // We return (diff == 0) without depending on contents of a and b
   return diff == 0;
 }
 ```
