@@ -137,7 +137,7 @@ Additionnally, below is the ATMEGA pinout.
 <br/>
 
 ### 2.3 Power Trace Timing Analysis
-The only hint in our possession regarding the password is the first letter, "f". Initially, the approach was to observe is there were any peaks of consumption when the right letter was sent. Unfortunately, this line of inquiry did not lead to conclusive results because of the therefore another approach was considered. This will be detailed hereunder.
+The only hint in our possession regarding the password is the first letter, "f". Initially, the approach was to observe is there were any peaks of consumption when the right letter was sent. Unfortunately, this approach did not lead to conclusive results because of the noise and the difficulties to discriminate more power hungry communications. Therefore another method was considered. This will be detailed hereunder.
 
 In any case, the logical first step is to plot the power trace of "f" and compare it to a wrong input. This is done when executing the following code.
 ```python
