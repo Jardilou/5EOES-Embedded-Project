@@ -320,7 +320,7 @@ The output I got from this command is detailed here below.
 
 Among this file was a succession of random characters closely resembling to a password. Hmm, I wonder if this could be it...
 
-I reconnected my serial connection using the HW-193. What a surprise: a salt and hash appeared just before my eyes. Moreover, the previous image showing the content of the `.data` section exposed the very well kept secret **"Je suis une petite tortue"**, confirming indeed that my professor is, in fact, a small turtle.
+I reconnected my serial connection using the HW-193. What a surprise: a salt and hash appeared ! Moreover, the previous image showing the content of the `.data` section exposed the very well kept secret **"Je suis une petite tortue"**.
 This attack is thus more damaging than the aforementioned Power Trace Analysis Attack since it exposed not only the password to the vault but the secrets as well. This secret was used only to generate random salt and hashes but in concept, this attack is able to retrieve any sensitive information written in plaintext in the file.
 
 ![Im\_in2](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/salt_and_hash.png) <br/>
