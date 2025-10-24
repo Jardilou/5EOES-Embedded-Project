@@ -60,8 +60,6 @@ except IOError:
 cw.program_target(scope, cw.programmers.STM32FProgrammer, "../../firmware/mcu/stm32-gpio-tristate/gpio-tristate-{}.hex".format(PLATFORM))
 ```
 
-Once this is finished, the following should show up on the Serial Monitor.
-
 ---
 
 ## 1. Attack Identification
