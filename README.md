@@ -1,6 +1,6 @@
 # 5EOES-Embedded-Project
 
-**The goal of this project is to assess the course of Embedded Security describing how to operate attacks to crack a password on an embedded target using a chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware.**
+**The goal of this project is to assess the course of Embedded Security describing how to operate attacks to crack a password on an embedded target using a Chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware image.**
 
 ---
 
@@ -19,19 +19,19 @@
 
 ## 0. Preliminary Work
 
-The very first step is to flash the unidentified firmware (see `Preliminary_Work/secure_sketch_v20251015.1.elf`) on the arduino uno.
+The first step is to flash the unidentified firmware (see `Preliminary_Work/secure_sketch_v20251015.1.elf`) on the arduino uno.
 This is done using the following command:
 
 ```sh
 .\avrdude.exe -v -patmega328p -carduino -P COMXX -b115200 -Uflash:w:secure_sketch_v20251015.1.elf
 ```
-`COMXX` must be replaced by the right COM port and the command must be executed in the same folder as the firmware. **"Avrdude done. Thank you"** should appear once the flashing is finished.
+`COMXX` must be replaced by the right COM port and the command must be executed in the same folder as the firmware. The message **"Avrdude done. Thank you"** should appear once the flashing is finished.
 
 The second step is to download the chipwhisperer toolchain following this guide:
 
 [https://chipwhisperer.readthedocs.io/en/latest/](https://chipwhisperer.readthedocs.io/en/latest/)
 
-Once the toolchain is setup, before entering the attack identification phase, in order to avoid having the STM32F0 GPIOs driven by the CW-Nano when interacting with our external target, we should set them as high impedance. This is done by:
+Once the toolchain is set up, before entering the attack identification phase, in order to avoid having the STM32F0 GPIOs driven by the CW-Nano when interacting with our external target, we should set them as high impedance. This is done by:
 
 1. Creating a new folder in our chipwhisperer path named `firmware/mcu/stm32-gpio-tristate`.
 2. Putting the `gpio_tristate.c` and `Makefile.txt` (see the `Preliminary_Work` folder) files in this new folder.
@@ -60,35 +60,35 @@ except IOError:
 cw.program_target(scope, cw.programmers.STM32FProgrammer, "../../firmware/mcu/stm32-gpio-tristate/gpio-tristate-{}.hex".format(PLATFORM))
 ```
 
-Once this is finished, below is what should show up on the Serial Monitor.
+Once this is finished, the following should show up on the Serial Monitor.
 
 ---
 
 ## 1. Attack Identification
 
-When connecting the Arduino Uno in a classic setup, the following message would show up. <br/>
+When connecting the Arduino Uno in a classic setup, the following message would appear. <br/>
 
 ![Serial Monitor](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/welcome_to_the_vault.png) <br/>
 
 We can therefore conclude the probable presence of a hidden channel, likely UART on the pins of the ATMEGA328p.
 
-To detect a hidden channel, a USB to TTL UART Uploader Module is needed. In this case the CH340G HW-193 was used.
+To detect a hidden channel, a USB-TTL UART uploader Module is required. In this case, a CH340G HW-193 was used.
 
 ![CH340G HW-193](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/CH340G_HW-193.jpg) <br/>
 
-The next step is to remove the ATMEGA328p microcontroller and cable it in the same way as the following schematic. The value of the resistors is 100 Ohms and the value of the capacitors must be between 100 and 300 µF.
+The next step is to remove the ATMEGA328p microcontroller and wire it as shown in the schematic below. The value of the resistors is 100 Ohms and the value of the capacitors must be between 100 and 300 µF.
 
 The schematic will be detailed in the Power Analysis section. <br/>
 ![ATMEGA\_Breadboard](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Breadboard_Circuit.png) <br/>
 
-After a series of tries and errors in order to find the secret UART channel, the correct connection between the USB-UART HW-193 module and the ATMEGA on the breadboard was discovered :
+After a series of tries and errors in order to locate the secret UART channel, the correct connection between the USB-UART HW-193 module and the ATMEGA on the breadboard was discovered :
 
 * HW-193 5V to VCC Rail
 * HW-193 GND to GND Rail
-* HW-193 RV to ATMEGA pin 16 (see the `Attack_Identification/ATMEGA_Pinout.png` file)
-* HW-193 5V to ATMEGA pin 17
+* HW-193 RX to ATMEGA pin 16 (see the `Attack_Identification/ATMEGA_Pinout.png` file)
+* HW-193 TX to ATMEGA pin 17
 
-This discovery was made thanks to the proximity of the TX and RX pins. Should these pins be far away from each other, the time needed for the discovery would have been far greater.
+This discovery was achieved thanks to the proximity of the TX and RX pins. If these pins had been farther apart, discovery would have taken longer.
 
 The Arduino Uno board should be disconnected in this configuration since the input voltage will come from the HW-193 module.
 
@@ -104,7 +104,7 @@ We have thus found the main entry point!
 
 ### 2.1 Description
 
-A power analysis attack on an embedded platform measures tiny variations of power consumption during the operations of the platform. The goal to extract secret data, a password in our case. It exploits physical leakage which will be measured by our chipwhisperer nano in order to analyse the traces.
+A power analysis attack on an embedded platform measures tiny variations of power consumption during the operations of the platform. The goal to extract secret data, a password in our case. It exploits physical leakage measured by our chipwhisperer nano in order to analyze the traces.
 
 ### 2.2 Setup of the chipwhisperer
 
@@ -131,13 +131,13 @@ Below is the CWNano up close.
 ![CWNano\_up\_close](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/CWNano_Up_Close.png) 
 <br/>
 
-Additionnally, below is the ATMEGA pinout.
+Additionally, below is the ATMEGA pinout.
 
 ![ATMEGA\_Pinout](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Attack_Identification/ATMEGA_Pinout.jpg) 
 <br/>
 
 ### 2.3 Power Trace Timing Analysis
-The only hint in our possession regarding the password is the first letter, "f". Initially, the approach was to observe is there were any peaks of consumption when the right letter was sent. Unfortunately, this approach did not lead to conclusive results because of the noise and the difficulties to discriminate more power hungry communications. Therefore another method was considered. This will be detailed hereunder.
+The only hint in our possession regarding the password is the first letter, "f". The initial approach was to observe if there were any peaks of consumption when the right letter was sent. Unfortunately, this approach did not lead to conclusive results because of the noise and the difficulties to discriminate more power hungry communications. Therefore another method was considered. This method will be detailed hereunder.
 
 In any case, the logical first step is to plot the power trace of "f" and compare it to a wrong input. This is done when executing the following code.
 ```python
@@ -177,14 +177,14 @@ trace_f = capture("f")
 trace_abc = capture("abc")
 trace_abcdef = capture("abcdef")
 
-#To be executed after retrieval of password for delay comparison
+# To be executed after retrieval of password for delay comparison
 # trace_f7_dash = capture("f7-")
 # trace_f7_dash_at_Jp = capture("f7-@Jp")
 # trace_right_pw = capture("f7-@Jp0w")
 
 ############################################################################################################
 
-#To be executed after retrieval of password for delay comparison
+# To be executed after retrieval of password for delay comparison
 # if trace_f is not None and trace_a is not None and trace_abcdef is not None and trace_abc is not None and trace_f7_dash is not None and  trace_f7_dash_at_Jp is not None and trace_right_pw is not None:
 
 if trace_f is not None and trace_a is not None and trace_abcdef is not None and trace_abc is not None:
@@ -211,7 +211,7 @@ The next picture represents the traces of "a", "abc" and "abcdef" compared to th
 
 It is clear that the input of a correct character extends the computing time. There is most likely a loop in the source code where each character is checked one after another and the code doesn't leave the loop until it a wrong character is detected in the string. Therefore, greater shift of the peaks of this power trace indicates if the character is correct or not.
 
-This analysis method is therefore not a power analysis per se, but in reality more of a timing analysis on the power traces. The next step is thus to define a method to compute the shift of the trace.
+This analysis method is therefore not a power analysis per se, but rather a timing analysis on the power traces. The next step is thus to define a method to compute the shift of the trace.
 
 ```python
 import numpy as np
@@ -230,12 +230,12 @@ def estimate_sample_shift(trace, reference):
 
 ```
 
-The only step left is to automate a password attack. It is the purpose of the code below 
+The remaining step is to automate a password attack. It is the purpose of the code below.
 
 
 ```python
 def capture_trace(password_attempt):
-    """Capture power trace for a given password attempt"""
+    """ Capture power trace for a given password attempt """
     scope.arm()
     time.sleep(0.01)
     
@@ -284,10 +284,9 @@ The output of this code is shown on the image here under.
 
 ![Password_retrieval](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/Password_retrieval_script_output.png)
 
+Note that because the length of the password is unknown, each of these attempts must be tested. For the salt and hash retrieval, see section [Firmware Analysis](#3-firmware-analysis).
 
-It is important to note that since the length of the password is unknown, each of these attempts must be tested by connecting the serial connection. For the salt and hash retrieval, see section [Firmware Analysis](#3-firmware-analysis).
-
-The next figure shows the complete comparison of delays for a variety of guesses. Each time correct characters are added to the password, the shift is greater. To get the complete figure, simply decomment the corresponding line on the code previously discussed.
+The next figure shows the complete comparison of delays for a variety of guesses. Each time correct characters are added to the password, the shift is greater. To generate the complete figure, simply uncomment the corresponding line on the code previously discussed.
 
 
 ![Complete_delay_comparison](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/Complete_Delay_Comparison.png)
@@ -296,32 +295,32 @@ The next figure shows the complete comparison of delays for a variety of guesses
 
 ## 3. Firmware Analysis
 
-The first option in order to retrieve the cyphered text contained on the platform is typing the following command. It extracts the human-readable text from our binary file. `-n 4` means only strings with a length above 4 characters should be retrieved since I assumed the password wouldn't be this short.
+The first option for retrieving readable text from the platform is to run the following command. It extracts the human-readable text from our binary file. `-n 4` means only strings with a length above 4 characters should be retrieved since I assumed the password wouldn't be this short.
 
 ```sh
 strings -n 4 secure_sketch_v20251015.1.elf > extracted_strings.txt
 ```
 
-This extracted file contained 705 lines in which lied the password (see `Firmware_Attack/extracted_strings.txt`).
+This extracted file contained 705 lines which included the password (see `Firmware_Attack/extracted_strings.txt`).
 
-Nevertheless, this next option yields more relevant results.
+However, this next option yields more relevant results.
 
 ```sh
 avr-objdump -s -j .data secure_sketch_v20251015.1.elf | less
 ```
 
 `avr-objdump` is a tool that lets you inspect the internal contents of an AVR firmware ELF file. The option `-s` tells it to dump the raw bytes.
-The option `-j XXX` restricts the dump to a specific memory section `XXX`. I tried the `.rodata` as well as the `.text` sections but unfortunately they yielded no results. The `.data` section contains global or static variables that have an initial value and will be copied into volatile SRAM at runtime. It is a key element of most embedded firmwares.
+The `-j XXX` option restricts the dump to a specific memory section `XXX`. I tried the `.rodata` as well as the `.text` sections but unfortunately they yielded no results. The `.data` section contains global or static variables that have an initial value and will be copied into volatile SRAM at runtime. It is a key element of most embedded firmwares.
 The `| less` at the end allows scrolling through the output.
 The output I got from this command is detailed here below.
 
 
 ![Im\_in](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/.data_section_content.png) <br/>
 
-Among this file was a succession of random characters closely resembling to a password. Hmm, I wonder if this could be it...
+Among the output was a succession of characters that closely resembled a password. Hmm, I wonder if this could be it...
 
 I reconnected my serial connection using the HW-193. What a surprise: a salt and hash appeared ! Moreover, the previous image showing the content of the `.data` section exposed the very well kept secret **"Je suis une petite tortue"**.
-This attack is thus more damaging than the aforementioned Power Trace Analysis Attack since it exposed not only the password to the vault but the secrets as well. This secret was used only to generate random salt and hashes but in concept, this attack is able to retrieve any sensitive information written in plaintext in the file.
+This attack is therefore more damaging than the aforementioned Power Trace Analysis Attack since it exposed not only the password to the vault but the secrets as well. This secret was used only to generate random salt and hashes but in concept, this attack is able to retrieve any sensitive information written in plaintext in the file.
 
 ![Im\_in2](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Firmware_Attack/salt_and_hash.png) <br/>
 
@@ -384,9 +383,9 @@ bool consttime_eq(const uint8_t *a, const uint8_t *b, size_t len) {
 }
 ```
 
-This function compares two byte arrays to check for equality but the time required for computation has to remain constant, regardless of how many bytes match. This means that no early exit is implemented to get out of the loop. 
+This function compares two byte arrays to check for equality and its execution time remains constant regardless of how many bytes match. This means that no early exit is implemented to get out of the loop. 
 
-The operation `a[i]^b[i]` is a `XOR` operation : each byte of a is compared with the corresponding byte of b. If the bytes are equal, XOR gives 0. If they are different, `XOR` gives some non-zero value. 
+The operation `a[i]^b[i]` is a `XOR` operation : each byte of a is compared with the corresponding byte of b. If the bytes are equal, `XOR` gives 0, otherwise `XOR` gives some non-zero value. 
 
 `diff` will store whether there is any difference between the two arrays. It is initialized to 0 meaning "no difference yet". 
 `diff |= ...` is a `bitwise OR` operation :
@@ -422,13 +421,13 @@ The complete code can be found in the folder `Countermeasures/Countermeasures.in
 
 ### 4.4 Results
 
-The next figure shows the content of the `.data` secion retrieved using the method previously mentioned.
+The next figure shows the content of the `.data` secion retrieved using the method above.
 
 ![data_cm](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Countermeasures/images/.data_section_countermeasures.png)
 
-Although the secret text is still present (it is necessary to generate random hash and salt), the plaintext password disappeared completely from the section. The method using strings yielded the same results (see `Countermeasures/extracted_strings_after_countermeasures.txt`).
+Although the secret text (used to generate the random salt and hash) remains present, the plaintext password disappeared completely from the section. The method using strings yielded the same results (see `Countermeasures/extracted_strings_after_countermeasures.txt`).
 
-Regarding the power traces, the constant-time implementation makes it obsolete since no shift can be observed. Therefore, the passwords retrieved will be random.
+With the constant-time implementation, timing shifts in the power traces are no longer observable. Therefore password guesses based on timing become ineffective.
 
 ![power_traces_cm](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Countermeasures/images/power_traces_offset_countermeasures.png
 )
@@ -438,16 +437,27 @@ Regarding the power traces, the constant-time implementation makes it obsolete s
 
 ## 5. Final Attack Tree
 
-Here are the vulnerabilities identified:
+Here are the vulnerabilities identified and exploited :
 
-* Access to the `.elf` firmware flashed on the platform containing unencrypted data
+* Access to the `.elf` firmware flashed on the platform which contains unencrypted data
 * Access to a hidden UART channel as well as a trigger set high during communication. This UART channel gave information when the wrong password is input.
 
-Exploits set up:
+Non-exploited vulnerabilities include :
+* Access to the debugWire arduino interface as well as ICSP to retrieve potential useful information
+* Access to the ATMEGA chip
+
+Exploits used:
 
 * Firmware analysis
 * Side-channel power traces analysis
 
+Other potential exploits :
+
+* Binwalk firmware entropy analysis
+* Sniffing the communications on the interfaces mentioned above
+* Decapsulation of the ATmega, depackaging and rebounding
+* Fault injection, rowhammer attack
+  
 ![Attack\_tree](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Additional_Content/ES_Project_Attack_Tree.drawio.png)
 
 ---
@@ -463,7 +473,7 @@ This table captures CVSS 4.0 metrics for threat modeling purposes.
 | Metric                       | Value    | Justification                                                                          |
 | ---------------------------- | -------- | -------------------------------------------------------------------------------------- |
 | **AV — Attack Vector**       | Physical | Attack needs physical access to the embedded platform                                  |
-| **AC — Attack Complexity**   | Low      | Sending a simple binary password yields a response. Once setup, pretty straightforward |
+| **AC — Attack Complexity**   | Low      | Sending a simple binary password yields a response. Once set up, pretty straightforward |
 | **AT — Attack Requirements** | None     | No victim-controlled prerequisites needed                                              |
 | **PR — Privileges Required** | None     | No authentication or access needed before exploit                                      |
 | **UI — User Interaction**    | None     | No interaction from the victim for the attack to succeed                               |
@@ -488,7 +498,7 @@ Subsequent System Impact Metrics : No subsequent systems
 | **AU — Automatable**                   | Yes         | Exploit can be automated at scale                                                 |
 | **R — Recovery**                       | User        | The system requires the user to flash a new firmware in case of successful attack |
 | **V — Value Density**                  | Diffuse     | A single platform is hacked in comparison to a central system for example         |
-| **RE — Vulnerability Response Effort** | High        | Platforms need to be recalled and reflashed                                       |
+| **RE — Vulnerability Response Effort** | High        | Platforms need to be recalled and reflashed or updated manually by the user       |
 | **U — Provider Urgency**               | Not defined | Note priority for vendor to remediate                                             |
 
 3. Environmental Metrics - Security Requirements : no additional environment
@@ -507,14 +517,14 @@ All these parameters sum up to a CVSS score of **0.3**, which is very low.
 
 ### 6.2 Firmware analysis
 
-Since the target as well as its secrets remains the same, most of these parameters will remain the same.
+Since the target and its secrets are the same, most of these parameters remain unchanged.
 
 #### 1. Base Metrics
 
 | Metric                       | Value    | Justification                                                                  |
 | ---------------------------- | -------- | ------------------------------------------------------------------------------ |
-| **AV — Attack Vector**       | Physical | Attacker exploits the vulnerability by acdessing target through terminal       |
-| **AC — Attack Complexity**   | Low      | Once environment setup with the tools and firmware, 1 line of code is required |
+| **AV — Attack Vector**       | Physical | Attacker exploits the vulnerability by accessing the target via a terminal     |
+| **AC — Attack Complexity**   | Low      | Once environment setup with the tools and firmware, one line of code is required|
 | **AT — Attack Requirements** | Present  | Victim-controlled prerequisites needed : firmware needs to be available        |
 | **PR — Privileges Required** | None     | No authentication or access needed before exploit                              |
 | **UI — User Interaction**    | None     | No interaction from the victim for the attack to succeed                       |
@@ -539,7 +549,7 @@ Subsequent System Impact Metrics : No subsequent systems
 | **AU — Automatable**                   | Yes         | Exploit can be automated at scale                                                 |
 | **R — Recovery**                       | User        | The system requires the user to flash a new firmware in case of successful attack |
 | **V — Value Density**                  | Diffuse     | A single platform is hacked in comparison to a central system for example         |
-| **RE — Vulnerability Response Effort** | High        | Platforms need to be recalled and reflashed                                       |
+| **RE — Vulnerability Response Effort** | High        | Platforms need to be recalled and reflashed or updated manually by the user       |
 | **U — Provider Urgency**               | Not defined | Note priority for vendor to remediate                                             |
 
 3. Environmental Metrics - Security Requirements : no additional environment
@@ -552,7 +562,7 @@ Subsequent System Impact Metrics : No subsequent systems
 | ------------------------ | ----- | ---------------------------------------------- |
 | **E — Exploit Maturity** | POC   | The exploit works but is not deployed at scale |
 
-All these metrics sum to a CVSS score of **5**, which is medium.
+All these metrics sum to a CVSS score of **5.0**, which is medium.
 
 ---
 
@@ -562,4 +572,7 @@ All these metrics sum to a CVSS score of **5**, which is medium.
 - NewAE Technology Inc., “20-Pin Connector — ChipWhisperer Documentation,” ChipWhisperer ReadTheDocs, Copyright 2023–2025. [Online]. Available: https://chipwhisperer.readthedocs.io/en/v6.0.0b/Capture/20-pin-connector.html#id15
 - National Vulnerability Database, “CVSS v4.0 Calculator,” NVD – Vulnerability Metrics, U.S. NIST. [Online]. Available: https://nvd.nist.gov/vuln-metrics/cvss/v4-calculator
 - parastuffs, “Embedded-Security — Attack the Vault,” GitHub (wiki). [Online]. Available: https://github.com/parastuffs/Embedded-Security/wiki#attack-the-vault
+- OpenAI, “give me a python function that analyses the shift between two given traces,” ChatGPT prompt, conversation with GPT-5, Oct. 2025. [Online]. Available: https://chat.openai.com/
+- OpenAI, “how to set up a function that compares 2 byte arrays with constant execution time ?,” ChatGPT prompt, conversation with GPT-5, Oct. 2025. [Online]. Available: https://chat.openai.com/
+- OpenAI, “formulate these links as a bullet list of IEEE references,” ChatGPT prompt, conversation with GPT-5, Oct. 2025. [Online]. Available: https://chat.openai.com/
 
