@@ -572,5 +572,6 @@ All these metrics sum to a CVSS score of **5.0**, which is medium.
 - parastuffs, “Embedded-Security — Attack the Vault,” GitHub (wiki). [Online]. Available: https://github.com/parastuffs/Embedded-Security/wiki#attack-the-vault
 - OpenAI, “give me a python function that analyses the shift between two given traces,” ChatGPT prompt, conversation with GPT-5, Oct. 2025. [Online]. Available: https://chat.openai.com/
 - OpenAI, “how to set up a function that compares 2 byte arrays with constant execution time ?,” ChatGPT prompt, conversation with GPT-5, Oct. 2025. [Online]. Available: https://chat.openai.com/
+- OpenAI, ChatGPT prompt: “Help me write a function that compares a hashed input string with an already stored hash.” [Online]. Available : https://chat.openai.com/
 - OpenAI, “formulate these links as a bullet list of IEEE references,” ChatGPT prompt, conversation with GPT-5, Oct. 2025. [Online]. Available: https://chat.openai.com/
 
