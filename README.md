@@ -1,6 +1,6 @@
 # 5EOES-Embedded-Project
 
-**The goal of this project is to assess the course of Embedded Security describing how to operate attacks to crack a password on an embedded target using a Chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware image. Here are the instructions to the assessment : https://github.com/parastuffs/Embedded-Security/wiki#attack-the-vault.**
+**The goal of this project is to assess the course of Embedded Security describing how to operate attacks to crack a password on an embedded target using a Chipwhisperer Nano. The target in our case is an Arduino Uno platform flashed with an unidentified firmware image. Here are the instructions of the project : https://github.com/parastuffs/Embedded-Security/wiki#attack-the-vault.**
 
 ---
 
