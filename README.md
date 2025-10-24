@@ -285,7 +285,7 @@ The output of this code is shown on the image here under.
 Note that because the length of the password is unknown, each of these attempts must be tested. For the salt and hash retrieval, see section [Firmware Analysis](#3-firmware-analysis).
 
 The next figure shows the complete comparison of delays for a variety of guesses. Each time correct characters are added to the password, the shift is greater. To generate the complete figure, simply uncomment the corresponding line on the code previously discussed.
-> (EDIT : I realised that I made a typo in the title of the last plot : the correct password, f7-J@p0w, is incorrectly written) 
+> (EDIT : I realised that I made a typo in the title of the last plot : the correct password, f7-@Jp0w, is incorrectly written) 
 
 ![Complete_delay_comparison](https://github.com/Jardilou/5EOES-Embedded-Project/blob/main/Power_Analysis_Attack/Images/Complete_Delay_Comparison.png)
 
