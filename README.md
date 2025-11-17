@@ -148,7 +148,7 @@ import time
 scope = cw.scope()
 target = cw.target(scope, cw.targets.SimpleSerial2)
 target.baud = 9600
-scope.default_setup()
+scope.default_setup() 
 scope.adc.samples = 10000
 
 ############################################################################################################
